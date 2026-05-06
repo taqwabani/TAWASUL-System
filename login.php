@@ -1,49 +1,11 @@
-<?php include 'config/db_connect.php'; ?>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - نظام تواصل</title>
-    <link rel="stylesheet" href="assets/CSS/login.css">
-</head>
-<body>
-    <div class="main-wrapper">
-        <div class="login-card">
-            <!-- الجزء الأيمن: الشعار والخلفية  -->
-            <div class="brand-section">
-                <div class="logo-box">
-                    <img src="images/BookOpen.svg" alt="Logo">
-                </div>
-                <h1 class="brand-name">TAWASUL</h1>
-            </div>
+<?php 
+include 'config/db_connect.php';
+include 'HTML/login.html'; 
 
-            <!-- الجزء الأيسر: نموذج تسجيل الدخول -->
-            <div class="form-section">
-                <h2>نظام التواصل المدرسي</h2>
-                <p class="welcome-text">مرحباً بك مجدداً. يرجى إدخال بيانات اعتمادك للوصول إلى لوحة التحكم الخاصة بك.</p>
 
-                <form action="auth.php" method="POST">
-                    <div class="input-group">
-                        <label>اسم المستخدم</label>
-                        <div class="input-wrapper">
-                            <input type="text" name="userName" placeholder="أدخل البريد الإلكتروني أو المعرف" required>
-                        </div>
-                    </div>
 
-                    <div class="input-group">
-                        <label>كلمة المرور</label>
-                        <div class="input-wrapper">
-                            <input type="password" name="password" placeholder="••••••••" required>
-                        </div>
-                    </div>
 
-                    <button type="submit" class="btn-login">تسجيل دخول</button>
-                </form>
-            </div>
-        </div>
- 
-        </div>
-    </div>
-</body>
-</html>
+
+
+
+?>
