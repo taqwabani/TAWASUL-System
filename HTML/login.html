@@ -21,23 +21,30 @@
             <div class="form-section">
                 <h2>نظام التواصل المدرسي</h2>
                 <p class="welcome-text">مرحباً بك مجدداً. يرجى إدخال بيانات اعتمادك للوصول إلى لوحة التحكم الخاصة بك.</p>
-
-                <form action="login.php" method="POST">
+                 
+                <form action="login.php" method="POST" >
                     <div class="input-group">
+                        
                         <label>اسم المستخدم</label>
                         <div class="input-wrapper">
-                            <input type="text" name="userName" placeholder="أدخل البريد الإلكتروني أو المعرف" required>
+                            <input type="text" name="userName" placeholder="أدخل المعرف الخاص بك" required>
                         </div>
                     </div>
 
                     <div class="input-group">
                         <label>كلمة المرور</label>
                         <div class="input-wrapper">
-                            <input type="password" name="password" placeholder="••••••••" required>
+                            <input type="password" id="myPass" name="password" placeholder="••••••••" required>
                         </div>
+                        <span style="color: red; font-size: 16px;" class="error" >{{ERROR}}</span>
+                        <div style="margin-top: 5px; font-size: 13px; color: #666;">
+                              <input type="checkbox" onclick="document.getElementById('myPass').type = this.checked ? 'text' : 'password'"> 
+                                      إظهار كلمة المرور
+                        </div>
+                        
                     </div>
 
-                    <button type="submit" class="btn-login">تسجيل دخول</button>
+                    <button type="submit" name="loginBtn" class="btn-login">تسجيل دخول</button>
                 </form>
             </div>
         </div>
