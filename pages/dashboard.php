@@ -1,2 +1,9 @@
+<?php
 
- مرحبا
+include('../config/db_connect.php');
+include('../HTML/dashboard.html');
+
+
+
+
+?>

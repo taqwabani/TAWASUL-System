@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title> الاستفسارات - TAWASUL</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon"> 
+                    <h2>TAWASUL</h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="../pages\dashboard.php">
+                    <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
+                </a>
+                <a href="inquiries.html" class="active">
+                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> الاستفسارات
+                </a>
+                <a href="calendar.html">
+                    <img src="../images/lucide-CalendarDays.svg" class="nav-icon"> الجدول الدراسي
+                </a>
+                <a href="notifications.html">
+                    <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">مركز الاستفسارات</div>
+                <div class="user-info">
+                    <span>ولي الأمر: أحمد</span>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="card send-inquiry-card">
+                    <div class="card-header">
+                        <h3>إرسال استفسار جديد</h3>
+                        <p>يمكنك من خلال هذه الصفحة إرسال تساؤلاتك واستفساراتك.</p>
+                    </div>
+                    <form action="../send_inquiry.php" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>عنوان الاستفسار</label>
+                                <input type="text" name="subject" placeholder="أدخل عنواناً واضحاً ومختصراً..." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label>نص الرسالة</label>
+                                <textarea name="message" rows="5" placeholder="اكتب استفسارك هنا بشكل مفصل ..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <img src="../images/lucide-Send.svg" class="btn-icon">
+                                إرسال الاستفسار الآن
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card history-card">
+                    <div class="card-header">
+                        <h3>قائمة الاستفسارات السابقة</h3>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الإجراءات</th>
+                                <th>التاريخ</th>
+                                <th>العنوان</th>
+                                <th>الحالة</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="../images/lucide-MessageSquare.svg" class="action-icon">
+                                </td>
+                                <td>2026-10-25</td>
+                                <td>استفسار بخصوص  .....</td>
+                                <td><span class="status replied">تم الرد</span></td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="../images/lucide-MessageSquare.svg" class="action-icon">
+                                </td>
+                                <td>2026-11-02</td>
+                                <td>طلب اذن </td>
+                                <td><span class="status pending">قيد الانتظار</span></td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
