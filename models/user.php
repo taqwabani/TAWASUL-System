@@ -64,7 +64,7 @@ class User {
         exit();
     }
 
-   
+    
     public function getRole() { return $this->role; }   // Getter للحصول على صلاحية المستخدم
    
 }

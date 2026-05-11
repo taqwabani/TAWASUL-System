@@ -1,3 +1,4 @@
+/*تعريف المتغيرات العامة للألوان والقياسات لتسهيل التعديل الموحد*/
 :root {
     --primary-color: #001f3f;    
     --accent-color: #012f61;     
@@ -10,7 +11,7 @@
     --status-pending: #ffc107;
     --sidebar-width: 260px;
 }
-
+/* إعادة ضبط القيم الافتراضية للمتصفح لضمان توافق التنسيقات */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -41,8 +42,10 @@ body {
     position: fixed; 
     height: 100vh;
     right: 0;
+    z-index: 1000; 
 }
 
+/* تنسيق اللوجو في أعلى السايدبار */
 .sidebar-header .logo {
     display: flex;
     align-items: center;
@@ -51,12 +54,12 @@ body {
     border-bottom: 1px solid rgba(255,255,255,0.1);
     margin-bottom: 20px;
 }
-
+ 
 .logo-icon {
     width: 30px;
     filter: brightness(0) invert(1);
 }
-
+ /* تنسيق روابط التنقل في السايدبار */
 .sidebar-nav a {
     display: flex;
     align-items: center;
@@ -68,7 +71,7 @@ body {
     transition: 0.3s;
     margin-bottom: 5px;
 }
-
+/* أيقونات القائمة الجانبية */
 .nav-icon {
     width: 18px;
     filter: opacity(0.7) invert(1);
@@ -89,6 +92,9 @@ body {
     margin-right: var(--sidebar-width); 
     display: flex;
     flex-direction: column;
+
+    
+    margin-top: 70px; 
 }
 
 /* الهيدر العلوي */
@@ -99,9 +105,14 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border-color);
-    position: sticky;
+    
+    
+    position: fixed;      
     top: 0;
-    z-index: 100;
+    left: 0;
+    right: var(--sidebar-width); /* يمتد من اليسار ويتوقف عند بداية السايدبار */
+    height: 70px;        
+    z-index: 999;         /* ليكون تحت السايدبار وفوق محتوى الصفحة */
 }
 
 .page-title {
@@ -150,6 +161,7 @@ body {
     font-size: 0.9rem;
 }
 
+/*تنسيق عناصر الإدخال*/
 input[type="text"], textarea {
     width: 100%;
     padding: 12px;
@@ -166,7 +178,7 @@ input:focus, textarea:focus {
     background-color: #fff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
-
+/* زر الإرسال الأساسي */
 .btn-primary {
     background-color: var(--accent-color);
     color: white;
@@ -212,7 +224,6 @@ input:focus, textarea:focus {
     font-size: 0.9rem;
 }
 
-/* الحالات (Statuses) */
 .status {
     padding: 4px 12px;
     border-radius: 20px;
@@ -233,7 +244,7 @@ input:focus, textarea:focus {
 
 
 
-
+/*(Responsive Design)*/
 @media (max-width: 992px) {
     .sidebar {
         width: 80px;
@@ -274,7 +285,6 @@ input:focus, textarea:focus {
     .sidebar-header {
         display: none; 
     }
-    /* تحويل الجدول لنظام الكروت في الموبايل لسهولة القراءة */
     .data-table thead {
         display: none;
     }
