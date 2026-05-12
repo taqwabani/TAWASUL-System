@@ -17,6 +17,7 @@ class Announcement {
         $this->imagePath = $imagePath;
         $this->date = date("Y-m-d H:i:s"); // تعيين التاريخ الحالي
     }
+
     // Getters للوصول للبيانات من الكلاسات الأخرى
     public function getTitle() { return $this->title; }
     public function getContent() { return $this->content; }
