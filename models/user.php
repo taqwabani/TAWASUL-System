@@ -64,7 +64,8 @@ class User {
         exit();
     }
 
-    
+    public function setUserId($id) {$this->userID = $id;}
+    public function getUserId() {return $this->userID; }
     public function getRole() { return $this->role; }   // Getter للحصول على صلاحية المستخدم
    
 }
