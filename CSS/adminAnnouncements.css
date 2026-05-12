@@ -1,0 +1,243 @@
+/* الحاوية الرئيسية */
+.announcement-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 20px;
+}
+
+/* تنسيق رأس الصفحة */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 20px;
+}
+
+.header-text h2 {
+    color: #001f3f; /* الأزرق الداكن الخاص بكِ */
+    margin-bottom: 5px;
+}
+
+.header-text p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* زر الإضافة */
+.btn-primary-dark {
+    background-color: #001f3f;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-primary-dark:hover {
+    background-color: #012f61;
+}
+
+/* تنسيق الجدول */
+.announcement-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+.announcement-table th {
+    background-color: #f8f9fa;
+    padding: 15px;
+    color: #001f3f;
+    font-size: 0.85rem;
+    border-bottom: 2px solid #eee;
+}
+
+.announcement-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+/* تنسيق الصورة المصغرة */
+.thumb-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.ad-title {
+    font-weight: 600;
+    color: #333;
+}
+
+/* روابط الإجراءات */
+.actions {
+    display: flex;
+    gap: 15px;
+}
+
+.action-link {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.action-link.edit { color: #001f3f; }
+.action-link.delete { color: #dc3545; }
+
+.action-link:hover { text-decoration: underline; }
+
+
+
+/* تنسيق بطاقة النموذج */
+.form-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+}
+
+.form-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.form-header h3 { color: #001f3f; margin-bottom: 5px; }
+.form-header p { color: #777; font-size: 0.9rem; }
+
+/* تنسيق الحقول */
+.input-group { margin-bottom: 20px; }
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-group input[type="text"], 
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: #001f3f;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,31,63,0.1);
+}
+
+/* زر الإلغاء */
+.btn-cancel {
+    text-decoration: none;
+    color: #666;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+/* رفع الملفات */
+.file-upload-wrapper {
+    position: relative;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.file-upload-wrapper input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* ضبط الحاوية لتكون مرنة */
+.announcement-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    
+    margin: 20px; 
+    width: auto; 
+    box-sizing: border-box; 
+    
+    overflow: hidden; 
+}
+
+
+@media (max-width: 768px) {
+    .announcement-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .btn-primary-dark {
+        width: 100%; /* الزر يأخذ العرض كامل */
+        text-align: center;
+    }
+}
+@media (max-width: 600px) {
+    /* إخفاء رأس الجدول */
+    .announcement-table thead {
+        display: none;
+    }
+
+    .announcement-table, 
+    .announcement-table tbody, 
+    .announcement-table tr, 
+    .announcement-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .announcement-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: #fff;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .announcement-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f9f9f9;
+    }
+
+    /* إضافة تسميات جانبية لكل خلية */
+    .announcement-table td::before {
+        content: attr(data-label); /* تأكدي من إضافة هذه الخاصية في HTML */
+        font-weight: bold;
+        color: #001f3f;
+    }
+
+    .thumb-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+body {
+    overflow-x: hidden; /* يمنع ظهور شريط التمرير العرضي نهائياً */
+    margin: 0;
+    padding: 0;
+}
