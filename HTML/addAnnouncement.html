@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة إعلان جديد - TAWASUL</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/adminAnnouncements.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon"> 
+                    <h2>TAWASUL</h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboardA.html"><img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية</a>
+                <a href="adminAnnouncements.html" class="active"><img src="../images/lucide-Megaphone.svg" class="nav-icon"> ادارة الاعلانات</a>
+                <a href="users.html"><img src="../images/lucide-Users.svg" class="nav-icon"> ادارة المستخدمين</a>
+                <a href="notifications.html"><img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">إضافة إعلان جديد</div>
+                <div class="user-info"><span>المدير : سالم</span></div>
+            </header>
+
+            <div class="announcement-container">
+                <div class="form-card">
+                    <div  class="form-header">
+                        <h3>تفاصيل الإعلان</h3>
+                        <p>يرجى إدخال البيانات المطلوبة لنشر الإعلان </p>
+                    </div>
+                    
+                    <form action="../pages/addAnnouncement.php" method="POST" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <label>عنوان الإعلان</label>
+                            <input type="text" name="title" placeholder="ادخل عنوان الاعلانات هنا..." required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>محتوى الإعلان</label>
+                            <textarea name="content" rows="6" placeholder="اكتب تفاصيل الإعلان هنا..." required></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label>إرفاق صورة الإعلان</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" name="announcementImage" id="file-input" accept="image/*">
+                                <label for="file-input" class="file-label">
+                                    <img src="../images/material-Image.svg" style="width:20px; opacity:0.5">
+                                    <span>اضغط لاختيار صورة</span>
+                                </label>
+                                <button type="button" id="remove-img-btn" 
+                                        style="display:none; position:absolute; top:-10px; left:-10px; background:rgba(1, 13, 80, 0.63); color:white; border:none; border-radius:50%; cursor:pointer; width:30px; height:30px; z-index:10; font-weight:bold;">
+                                      X
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" name="submit_ad" class="btn-primary-dark">نشر الإعلان </button>
+                            <a href="adminAnnouncements.html" class="btn-cancel">إلغاء</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        //تحديد العناصر الأساسية من واجهة المستخدم 
+       const fileInput = document.getElementById('file-input');// حقل إدخال الملف
+       const fileLabel = document.querySelector('.file-label');// حاوية عرض الصورة Label
+       const removeBtn = document.getElementById('remove-img-btn');// زر حذف الصورة المختار
+      //  لاستعادته عند حذف الصورةLabel حفظ المحتوى الأصلي للـ
+       const originalLabelContent = fileLabel.innerHTML; 
+
+       // معالج حدث تغيير القيمة عند اختيار ملف جديد
+        fileInput.onchange = function (evt) {
+        // ووجود ملف مختارFileReader التحقق من دعم المتصفح لـ
+           var files = evt.target.files;
+            if (FileReader && files && files.length) {
+                var fr = new FileReader();
+                // تنفيذ الدالة عند اكتمال قراءة ملف الصورة بنجاح
+                fr.onload = function () {
+            //  لعرض معاينة الصورة المختارةLabelتحديث محتوى الـ 
+            fileLabel.innerHTML = `<img src="${fr.result}" style="max-height: 150px; border-radius: 8px; width: 100%; object-fit: contain;">`;
+             // إظهار زر الحذف (X) للمستخدم
+            removeBtn.style.display = "block";
+        }
+        
+        fr.readAsDataURL(files[0]);
+    }
+}
+
+removeBtn.onclick = function(e) {
+    e.preventDefault();
+    fileInput.value = ""; // تصفير قيمة الحقل لضمان عدم إرسال الملف للسيرفر
+    fileLabel.innerHTML = originalLabelContent; // إعادة الواجهة لشكلها الأصلي قبل الاختيار
+    removeBtn.style.display = "none"; // إخفاء زر الحذف
+}
+</script>
+</body>
+</html>
