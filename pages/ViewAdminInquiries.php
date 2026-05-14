@@ -8,8 +8,7 @@ $admin = new Admin($conn);
 $inquiries = $admin->viewInquiries();// جلب جميع الاستفسارات
 
 
-$tableRows = "";
-
+$tableRows = ""; // متغير لتجميع صفوف الجدول
 if (!empty($inquiries)) {
     foreach ($inquiries as $item) { // المرور على جميع الاستفسارات
         $statusClass = ($item->status == 'قيد الانتظار') ? 'pending' : 'replied'; // تحديد كلاس الحالة حسب حالة الاستفسار

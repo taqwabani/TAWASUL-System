@@ -52,7 +52,7 @@ class Admin extends User {
 
             // نرجع مصفوفة تحتوي على النوعين من البيانات
             return [
-                'details' => $info,
+                'details' => $info,// بيانات الاستفسار مع اسم ولي الأمر
                 'chat' => $messages
             ];
 

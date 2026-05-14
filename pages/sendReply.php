@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     //   الشخص المسجل حالياً في النظامID
     $senderID = $_SESSION['userID']; 
-    // التحقق من اكتمال البيانات
+    // التحقق من أن البيانات المطلوبة غير فارغة
 
     if (!empty($messageText) && !empty($inquiryID)) {
         try {

@@ -1,8 +1,8 @@
 /*تعريف المتغيرات العامة للألوان والقياسات لتسهيل التعديل الموحد*/
 :root {
-    --primary-color: #001f3f;    
-    --accent-color: #012f61;     
-    --bg-light: #f4f7f9;     
+    --primary-color: #001f3f;
+    --accent-color: #012f61;
+    --bg-light: #f4f7f9;
     --white: #ffffff;
     --text-dark: #333333;
     --text-muted: #666666;
@@ -11,6 +11,7 @@
     --status-pending: #ffc107;
     --sidebar-width: 260px;
 }
+
 /* إعادة ضبط القيم الافتراضية للمتصفح لضمان توافق التنسيقات */
 * {
     box-sizing: border-box;
@@ -39,10 +40,10 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    position: fixed; 
+    position: fixed;
     height: 100vh;
     right: 0;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 /* تنسيق اللوجو في أعلى السايدبار */
@@ -51,34 +52,37 @@ body {
     align-items: center;
     gap: 10px;
     padding: 20px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 20px;
 }
- 
+
 .logo-icon {
     width: 30px;
     filter: brightness(0) invert(1);
 }
- /* تنسيق روابط التنقل في السايدبار */
+
+/* تنسيق روابط التنقل في السايدبار */
 .sidebar-nav a {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     padding: 12px 15px;
     border-radius: 8px;
     transition: 0.3s;
     margin-bottom: 5px;
 }
+
 /* أيقونات القائمة الجانبية */
 .nav-icon {
     width: 18px;
     filter: opacity(0.7) invert(1);
 }
 
-.sidebar-nav a:hover, .sidebar-nav a.active {
-    background-color: rgba(255,255,255,0.1);
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
     color: var(--white);
 }
 
@@ -89,12 +93,12 @@ body {
 /* المحتوى الرئيسي (Main Content)  */
 .main-content {
     flex: 1;
-    margin-right: var(--sidebar-width); 
+    margin-right: var(--sidebar-width);
     display: flex;
     flex-direction: column;
 
-    
-    margin-top: 70px; 
+
+    margin-top: 70px;
 }
 
 /* الهيدر العلوي */
@@ -105,14 +109,16 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border-color);
-    
-    
-    position: fixed;      
+
+
+    position: fixed;
     top: 0;
     left: 0;
-    right: var(--sidebar-width); /* يمتد من اليسار ويتوقف عند بداية السايدبار */
-    height: 70px;        
-    z-index: 999;         /* ليكون تحت السايدبار وفوق محتوى الصفحة */
+    right: var(--sidebar-width);
+    /* يمتد من اليسار ويتوقف عند بداية السايدبار */
+    height: 70px;
+    z-index: 999;
+    /* ليكون تحت السايدبار وفوق محتوى الصفحة */
 }
 
 .page-title {
@@ -133,7 +139,7 @@ body {
 .card {
     background: var(--white);
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 25px;
     margin-bottom: 25px;
 }
@@ -162,7 +168,8 @@ body {
 }
 
 /*تنسيق عناصر الإدخال*/
-input[type="text"], textarea {
+input[type="text"],
+textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--border-color);
@@ -172,12 +179,14 @@ input[type="text"], textarea {
     transition: 0.3s;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     outline: none;
     border-color: var(--accent-color);
     background-color: #fff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
+
 /* زر الإرسال الأساسي */
 .btn-primary {
     background-color: var(--accent-color);
@@ -231,8 +240,15 @@ input:focus, textarea:focus {
     font-weight: 500;
 }
 
-.status.replied { background: #e8f5e9; color: var(--status-replied); }
-.status.pending { background: #fff8e1; color: var(--status-pending); }
+.status.replied {
+    background: #e8f5e9;
+    color: var(--status-replied);
+}
+
+.status.pending {
+    background: #fff8e1;
+    color: var(--status-pending);
+}
 
 .action-icon {
     width: 20px;
@@ -240,7 +256,9 @@ input:focus, textarea:focus {
     opacity: 0.6;
 }
 
-.action-icon:hover { opacity: 1; }
+.action-icon:hover {
+    opacity: 1;
+}
 
 
 
@@ -250,12 +268,18 @@ input:focus, textarea:focus {
         width: 80px;
         padding: 10px;
     }
-    .sidebar .logo h2, .sidebar-nav span, .sidebar-nav a {
-        font-size: 0; /* إخفاء النص وإبقاء الأيقونات */
+
+    .sidebar .logo h2,
+    .sidebar-nav span,
+    .sidebar-nav a {
+        font-size: 0;
+        /* إخفاء النص وإبقاء الأيقونات */
     }
+
     .sidebar-nav a {
         justify-content: center;
     }
+
     .main-content {
         margin-right: 80px;
     }
@@ -266,34 +290,42 @@ input:focus, textarea:focus {
     .main-wrapper {
         flex-direction: column;
     }
+
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
         padding: 10px;
     }
+
     .main-content {
         margin-right: 0;
     }
+
     .top-header {
         padding: 10px 20px;
     }
+
     .sidebar-nav {
         display: flex;
         justify-content: space-around;
     }
+
     .sidebar-header {
-        display: none; 
+        display: none;
     }
+
     .data-table thead {
         display: none;
     }
+
     .data-table tr {
         display: block;
         border: 1px solid var(--border-color);
         margin-bottom: 10px;
         border-radius: 8px;
     }
+
     .data-table td {
         display: flex;
         justify-content: space-between;
@@ -301,8 +333,9 @@ input:focus, textarea:focus {
         text-align: left;
         border-bottom: 1px solid #f0f0f0;
     }
+
     .data-table td::before {
-        content: attr(data-label); 
+        content: attr(data-label);
         font-weight: bold;
         margin-left: 10px;
     }

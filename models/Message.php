@@ -17,7 +17,7 @@ class Message {
     }
 
     
-    public function saveMessage($inquiryId, $senderId, $messageText) {
+    public function saveMessage($inquiryId, $senderId, $messageText) {// دالة لحفظ رسالة جديدة في قاعدة البيانات
         try {
           
             $sql = "INSERT INTO messages (inquiryID, senderID, messageText) VALUES (?, ?, ?)";

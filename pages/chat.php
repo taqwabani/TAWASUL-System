@@ -9,7 +9,7 @@ if (!$inquiryId)
          die("خطأ: لم يتم تحديد استفسار.");
     }
 
-$admin = new Admin($conn);
+$admin = new Admin($conn);// إنشاء كائن من كلاس الإدارة للتعامل مع البيانات الخاصة بالاستفسارات والمحادثات
 $data = $admin->viewInquiries($inquiryId);// جلب بيانات الاستفسار والمحادثة
 
 if (!$data || !$data['details']) // التحقق من وجود بيانات للاستفسار

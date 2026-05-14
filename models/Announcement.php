@@ -11,7 +11,7 @@ class Announcement {
     private $imagePath;
 
  
-    public function __construct($title, $content, $imagePath = null) {
+    public function __construct($title, $content, $imagePath = null) {// عند إنشاء إعلان جديد، يتم تمرير العنوان والمحتوى ومسار الصورة (اختياري)
         $this->title = $title;
         $this->content = $content;
         $this->imagePath = $imagePath;
