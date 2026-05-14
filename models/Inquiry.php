@@ -45,7 +45,14 @@ class Inquiry {
 
     
     // دالة لتحديث حالة الاستفسار (مثلاً من قيد الانتظار إلى تم الرد)
-    public function updateStatus($newStatus) {}
+    public function updateStatus($inquiryID, $newStatus) {
+    try {
+        $stmt = $this->db->prepare("UPDATE inquiries SET status = ? WHERE inquiryID = ?");
+        return $stmt->execute([$newStatus, $inquiryID]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
 
 }
 

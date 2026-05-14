@@ -28,5 +28,55 @@ class Admin extends User {
             return false;
         }
     }
+
+    
+    public function viewInquiries($inquiryId = null) {
+    try {
+        if ($inquiryId) { // جلب تفاصيل استفسار محدد مع رسائله (لشاشة الشات)
+           
+            
+            // جلب بيانات الاستفسار واسم ولي الأمر
+            $sqlInfo = "SELECT i.*, u.name as parentName 
+                        FROM inquiries i 
+                        JOIN users u ON i.parentID = u.userID 
+                        WHERE i.inquiryID = ?";
+            $stmt1 = $this->db->prepare($sqlInfo);
+            $stmt1->execute([$inquiryId]);
+            $info = $stmt1->fetch(PDO::FETCH_OBJ);
+
+            //بترتيب زمني messages جلب الرسائل المرتبطة من جدول
+            $sqlMsgs = "SELECT * FROM messages WHERE inquiryID = ? ORDER BY timestamp ASC";
+            $stmt2 = $this->db->prepare($sqlMsgs);
+            $stmt2->execute([$inquiryId]);
+            $messages = $stmt2->fetchAll(PDO::FETCH_OBJ);
+
+            // نرجع مصفوفة تحتوي على النوعين من البيانات
+            return [
+                'details' => $info,
+                'chat' => $messages
+            ];
+
+        } else {  //  جلب كل القائمة في شاشة الجدول
+
+            $sql = "SELECT i.inquiryID as inquiryId, i.status, i.subject, i.created_at, u.name as parentName 
+                    FROM inquiries i 
+                    JOIN users u ON i.parentID = u.userID 
+                    ORDER BY i.inquiryID DESC";
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+    } catch (PDOException $e) {
+        return ($inquiryId) ? null : [];
+    }
+}
+
+    
+
+
+
+
 }
 ?>

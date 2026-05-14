@@ -46,7 +46,7 @@ foreach ($inquiries as $row) {
     $statusClass = ($row['status'] == 'تم الرد') ? 'replied' : 'pending';
     
     $rows_html .= "<tr>
-        <td><a href='messages.php?id={$row['inquiryID']}'>
+        <td><a href='../pages/messages1.php?id={$row['inquiryID']}'>
                 <img src='../images/lucide-MessageSquare.svg' class='action-icon'>
             </a>
         <td>{$date}</td>

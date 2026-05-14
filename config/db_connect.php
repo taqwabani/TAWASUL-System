@@ -1,7 +1,7 @@
 <?php
 //  الاتصال بقاعدة البيانات
 $host = "localhost";
-$db_name = "tawasul db";
+$db_name = "tawasul_db";
 $username = "root";
 $password = "";
 try {

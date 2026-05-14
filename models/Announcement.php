@@ -3,19 +3,19 @@
 
 
 class Announcement {
-    // الخصائص كما في الرسم (Private لتحقيق الـ Encapsulation)
+
     private $announcementId;
     private $title;
     private $content;
     private $date;
     private $imagePath;
 
-    // الـ Constructor لإنشاء كائن جديد ببياناته الأساسية
+ 
     public function __construct($title, $content, $imagePath = null) {
         $this->title = $title;
         $this->content = $content;
         $this->imagePath = $imagePath;
-        $this->date = date("Y-m-d H:i:s"); // تعيين التاريخ الحالي
+        $this->date = date ("Y-m-d H:i:s"); // تعيين التاريخ الحالي
     }
 
     // Getters للوصول للبيانات من الكلاسات الأخرى
