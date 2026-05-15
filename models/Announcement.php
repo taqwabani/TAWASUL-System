@@ -1,7 +1,8 @@
 <?php
 
-
-
+/**
+ * كلاس الاعلانات يحتوي على خصائصه ودوال للوصول الى البيانات عند الحاجة 
+ */
 class Announcement {
 
     private $announcementId;

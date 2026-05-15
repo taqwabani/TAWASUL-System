@@ -1,5 +1,8 @@
 <?php
-// chat.php
+/**
+ * صفحة الخاصة بمنظق عمل الشات لرد ع الاستفسارات الخاصة بالادمن
+ * 
+ */
 require_once "../config/db_connect.php"; 
 require_once "../models/Admin.php"; 
 
@@ -39,7 +42,7 @@ foreach ($chatMessages as $msg) {// المرور على جميع الرسائل 
 
 
 $htmlFile = file_get_contents("../HTML/chat.html");
-die
+
 // استبدال القيم داخل ملف HTML
 $htmlFile = str_replace("{{parentName}}", htmlspecialchars($inquiryInfo->parentName), $htmlFile);
 $htmlFile = str_replace("{{subject}}", htmlspecialchars($inquiryInfo->subject), $htmlFile);

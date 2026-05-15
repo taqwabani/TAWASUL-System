@@ -16,10 +16,20 @@
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="dashboardA.html"><img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية</a>
-                <a href="adminAnnouncements.html" class="active"><img src="../images/lucide-Megaphone.svg" class="nav-icon"> ادارة الاعلانات</a>
-                <a href="users.html"><img src="../images/lucide-Users.svg" class="nav-icon"> ادارة المستخدمين</a>
-                <a href="notifications.html"><img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات</a>
+                <a href="../pages/dashboardA.php">
+                    <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
+                </a>
+                <a href="../pages/adminAnnouncements.PHP">
+                    <img src="../images/lucide-Megaphone.svg" class="nav-icon"> ادارة الاعلانات
+                </a>
+                <a href="../pages/u.PHP">
+                    <img src="../images/lucide-Users.svg" class="nav-icon"> ادارة المستخدمين
+                </a>
+                <a href="../pages/ViewAdminInquiries.php">
+                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon">  ردود والاستفسارات</a>
+                <a href="notifications.html">
+                    <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
+                </a>
             </nav>
         </aside>
 
@@ -35,7 +45,7 @@
                         <h3>تفاصيل الإعلان</h3>
                         <p>يرجى إدخال البيانات المطلوبة لنشر الإعلان </p>
                     </div>
-                    
+                    {{SUCCESS_MESSAGE}}
                     <form action="../pages/addAnnouncement.php" method="POST" enctype="multipart/form-data">
                         <div class="input-group">
                             <label>عنوان الإعلان</label>
@@ -64,7 +74,7 @@
 
                         <div class="form-actions">
                             <button type="submit" name="submit_ad" class="btn-primary-dark">نشر الإعلان </button>
-                            <a href="adminAnnouncements.html" class="btn-cancel">إلغاء</a>
+                            <a href="adminAnnouncements.PHP" class="btn-cancel">إلغاء</a>
                         </div>
                     </form>
                 </div>

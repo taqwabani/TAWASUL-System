@@ -1,4 +1,8 @@
 <?php
+
+/**
+ *  الصفحة الخاصة بمنطق العمل الخاص برد  على الاستفسار
+ */
 session_start();
 require_once "../config/db_connect.php"; 
 require_once "../models/Inquiry.php";
