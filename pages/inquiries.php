@@ -44,7 +44,7 @@ foreach ($inquiries as $row) {
     $date = date("Y-m-d", strtotime($row['created_at']));
 
     $statusClass = ($row['status'] == 'تم الرد') ? 'replied' : 'pending';
-    
+    // تجهيز صف الجدول لكل استفسار مع رابط لصفحة الرسائل الخاصة به، وعرض الحالة والتاريخ والموضوع
     $rows_html .= "<tr>
         <td><a href='../pages/messages1.php?id={$row['inquiryID']}'>
                 <img src='../images/lucide-MessageSquare.svg' class='action-icon'>
