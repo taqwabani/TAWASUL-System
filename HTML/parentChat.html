@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مركز الاستفسارات - المحادثة</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/parentChat.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon">
+                    <h2>TAWASUL</h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="../pages/dashboard.php">
+                    <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
+                </a>
+                <a href="../pages/inquiries.php" class="active">
+                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> الاستفسارات
+                </a>
+                <a href="calendar.html">
+                    <img src="../images/lucide-CalendarDays.svg" class="nav-icon"> الجدول الدراسي
+                </a>
+                <a href="notifications.html">
+                    <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">مركز الاستفسارات</div>
+                <div class="user-info"><span>ولي الأمر: أحمد</span></div>
+            </header>
+
+            <a href="../pages/inquiries.php" class="back-link" style="display: inline-block; margin: 15px 20px 0; text-decoration: none; color: #001f3f; font-weight: bold;">
+                 العودة لقائمة الاستفسارات 
+            </a>
+
+            <div class="chat-container">
+                <div class="inquiry-info-card">
+                    <h3>بيانات الاستفسار</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>موضوع الاستفسار</strong>
+                            <span>استفسار عن الكتب المدرسية</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>تاريخ الارسال</strong>
+                            <span>2026/05/29</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-thread">
+                    <div class="message-bubble admin-msg">
+                        <small>الإدارة</small>
+                        <p>مرحباً بك، سيتم البدء بتوزيع الكتب المدرسية اعتباراً من الأسبوع القادم.</p>
+                        <span style="font-size: 10px; display: block; margin-top: 5px;">10:30 AM</span>
+                    </div>
+
+                    <div class="message-bubble parent-msg">
+                        <small>ولي الأمر</small>
+                        <p>شكراً لكم على الرد السريع، هل هناك أوقات محددة للاستلام؟</p>
+                        <span style="font-size: 10px; display: block; margin-top: 5px;">10:35 AM</span>
+                    </div>
+
+                </div>
+
+                <div class="reply-box">
+                    <form action="#" method="POST" onsubmit="return false;">
+                        <textarea name="messageText" rows="4" placeholder="اكتب رسالتك هنا..." style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px; resize: none; margin-bottom: 10px; font-family: inherit;"></textarea>
+                        <button type="submit" class="send-btn">
+                            <img src="../images/lucide-Send.svg">
+                            إرسال الرسالة الآن
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
