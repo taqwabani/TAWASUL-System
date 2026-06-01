@@ -47,32 +47,21 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <strong>موضوع الاستفسار</strong>
-                            <span>استفسار عن الكتب المدرسية</span>
+                            <span>{{INQUIRY_SUBJECT}}</span>
                         </div>
                         <div class="info-item">
                             <strong>تاريخ الارسال</strong>
-                            <span>2026/05/29</span>
+                            <span>{{INQUIRY_DATE}}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="messages-thread">
-                    <div class="message-bubble admin-msg">
-                        <small>الإدارة</small>
-                        <p>مرحباً بك، سيتم البدء بتوزيع الكتب المدرسية اعتباراً من الأسبوع القادم.</p>
-                        <span style="font-size: 10px; display: block; margin-top: 5px;">10:30 AM</span>
-                    </div>
-
-                    <div class="message-bubble parent-msg">
-                        <small>ولي الأمر</small>
-                        <p>شكراً لكم على الرد السريع، هل هناك أوقات محددة للاستلام؟</p>
-                        <span style="font-size: 10px; display: block; margin-top: 5px;">10:35 AM</span>
-                    </div>
-
+                    {{CHAT_MESSAGES}}
                 </div>
 
                 <div class="reply-box">
-                    <form action="#" method="POST" onsubmit="return false;">
+                    <form action="parentChat.php?id={{INQUIRY_ID}}" method="POST">
                         <textarea name="messageText" rows="4" placeholder="اكتب رسالتك هنا..." style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px; resize: none; margin-bottom: 10px; font-family: inherit;"></textarea>
                         <button type="submit" class="send-btn">
                             <img src="../images/lucide-Send.svg">
