@@ -8,11 +8,23 @@ session_start();
 require_once "../config/db_connect.php"; 
 require_once "../models/perent.php";
 
+
 // التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
 if (!isset($_SESSION['userID'])) {
     header("Location: ../login.php"); 
     exit();
 }
+
+try {
+    
+    $database = Database::getInstance();
+    $conn = $database->getConnection();
+    
+} catch (Exception $e) {
+    die("خطأ في جلب اتصال قاعدة البيانات: " . $e->getMessage());
+}
+$parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "ولي الأمر";
+
 //معالجة البيانات القادمة من نموذج إرسال الاستفسار
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send'])) {
     // استقبال البيانات من حقول الإدخال
@@ -58,7 +70,7 @@ foreach ($inquiries as $row) {
 }
 
 
-// التحقق منه تم ارسال الاستفساربنجاح
+// التحقق من تم ارسال الاستفساربنجاح
 $success_msg = "";
 if (isset($_SESSION['status_success'])) {
     $success_msg = "<div style='background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center; font-weight: bold;'>تم إرسال استفسارك بنجاح.</div>";
@@ -66,10 +78,18 @@ if (isset($_SESSION['status_success'])) {
 }
 
 
+ob_start();
+include 'includes/sidebar.php'; 
+$sidebarHtml = ob_get_clean(); 
 
-// HTML دمج المحتوى البرمجي مع قالب الـ 
 $html_template = file_get_contents("../HTML/inquiries.html");
+
 $html_template = str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
-echo str_replace("{{INQUIRIES}}", $rows_html, $html_template);//بالصفوف الحقيقية التي تم تجهيزها {{INQUIRIES}}استبدال الكلمة المفتاحية
+$html_template = str_replace("{{INQUIRIES}}", $rows_html, $html_template);//بالصفوف الحقيقية التي تم تجهيزها {{INQUIRIES}}استبدال الكلمة المفتاحية
+
+$html_template = str_replace("{SIDEBAR}", $sidebarHtml, $html_template);
+
+$html_template = str_replace('{{PARENT_NAME}}', htmlspecialchars($parentName), $html_template);
+echo $html_template;
 
 ?>

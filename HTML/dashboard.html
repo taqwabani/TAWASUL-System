@@ -10,34 +10,13 @@
 <body>
 
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon">
-                    <h2>TAWASUL</h2>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="../pages/dashboard.php" class="active">
-                    <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
-                </a>
-                <a href="../pages/inquiries.php">
-                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> الاستفسارات
-                </a>
-                <a href="calendar.html">
-                    <img src="../images/lucide-CalendarDays.svg" class="nav-icon"> الجدول الدراسي
-                </a>
-                <a href="../HTML/notifications.html">
-                    <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
-                </a>
-            </nav>
-        </aside>
+        {SIDEBAR}
 
         <div class="main-content">
             <header class="top-header">
                 <div class="page-title">لوحة التحكم الرئيسية</div>
                 <div class="user-info">
-                    <span>ولي الأمر: أحمد</span>
+                    <span>ولي الأمر: {{PARENT_NAME}}</span>
                 </div>
             </header>
 
@@ -49,54 +28,7 @@
                 <div class="announcements-section">
                     <div class="section-subtitle">آخر المستجدات والإعلانات</div>
 
-                    <div class="announcement-dashboard-card">
-                        <div class="announcement-card-content">
-                            <div class="announcement-card-header">
-                                <h4 class="announcement-card-title">تحديث جدول الامتحانات النهائية للفصل الدراسي الحالي
-                                </h4>
-                                <span class="announcement-card-date">2026-05-12</span>
-                            </div>
-                            <div class="announcement-card-body">
-                                انتباه لجميع أولياء الأمور، نفيدكم بأنه قد تم إجراء تعديل طفيف على مواعيد الامتحانات
-                                النهائية. يرجى الاطلاع على الجدول المحدث المتوفر في لوحة التحكم والتأكد من تهيئة الطلاب
-                                بالشكل المناسب. بالتوفيق لجميع أبنائنا.
-                            </div>
-                        </div>
-                        <div class="announcement-image-wrapper">
-                            <img src="../uploads/exam_table.jpg" alt="مرفق الإعلان" class="announcement-img">
-                        </div>
-                    </div>
-
-                    <div class="announcement-dashboard-card">
-                        <div class="announcement-card-content">
-                            <div class="announcement-card-header">
-                                <h4 class="announcement-card-title">عطلة رسمية بمناسبة عيد الاستقلال</h4>
-                                <span class="announcement-card-date">2026-05-15</span>
-                            </div>
-                            <div class="announcement-card-body">
-                                تعلّمكم إدارة المدرسة بأن يوم الأحد القادم سيكون عطلة رسمية بمناسبة عيد الاستقلال
-                                الوطني، على أن تستأنف الدراسة والامتحانات بشكل طبيعي يوم الإثنين. نتمنى لكم قضاء وقت
-                                ممتع وسعيد.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="announcement-dashboard-card">
-                        <div class="announcement-card-content">
-                            <div class="announcement-card-header">
-                                <h4 class="announcement-card-title">رحلة مدرسية إلى المتحف الوطني</h4>
-                                <span class="announcement-card-date">2026-05-15</span>
-                            </div>
-                            <div class="announcement-card-body">
-                                تعلن إدارة المدرسة لجميع أولياء الأمور الكرام والطلاب الأعزاء عن بدء التجهيزات
-                                والتحضيرات لانطلاق فعاليات الأسبوع الثقافي السنوي والمسابقات المنهجية الكبرى على مستوى
-                                المحافظة. يتضمن هذا الأسبوع مجموعة واسعة جداً من الأنشطة الثقافية والفنية والرياضية،
-                                بالإضافة إلى معرض العلوم الشامل الذي يعرض فيه الطلاب ابتكاراتهم ومشاريعهم العلمية التي
-                                عملوا عليها طوال الفصل الدراسي الحالي. كما نود إحاطتكم علماً بأن هناك لجان تحكيم خارجية
-                                من أساتذة الجامعات والمشرفين التربويين لتقييم أداء الطلاب وتوزيع جوائز قيمة ودروع
-                                تذكارية على الفائزين بالمراكز الأولى. </div>
-                        </div>
-                    </div>
+                    {{ANNOUNCEMENTS_LIST}}
 
                     <div class="view">
                         <a href="../HTML/viewAllAnnouncements.html" class="btn-view-all">عرض كافة الإعلانات السابقة ←</a>

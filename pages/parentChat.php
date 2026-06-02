@@ -20,6 +20,17 @@ if (!$currentInquiryID) {
     die("خطأ: لم يتم تحديد استفسار صالح.");
 }
 
+try {
+    
+    $database = Database::getInstance();
+    $conn = $database->getConnection();
+
+} catch (Exception $e) {
+    die("خطأ في جلب اتصال قاعدة البيانات: " . $e->getMessage());
+}
+
+$parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "ولي الأمر";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['messageText'])) {
     $messageText = trim($_POST['messageText']); // تنظيف النص من الفراغات
     $currentUserID = $_SESSION['userID'];
@@ -68,14 +79,21 @@ try {
         </div>";
     }
 
+   ob_start();
+    include 'includes/sidebar.php'; 
+    $sidebarHtml = ob_get_clean(); 
+
     $htmlContent = file_get_contents("../HTML/parentChat.html");
     
     $htmlContent = str_replace("{{CHAT_MESSAGES}}", $messagesHTML, $htmlContent);
     $htmlContent = str_replace("{{INQUIRY_ID}}", $currentInquiryID, $htmlContent);
-
     $htmlContent = str_replace("{{INQUIRY_SUBJECT}}", htmlspecialchars($chatData['details']->subject), $htmlContent);
+    
     $formattedDate = date('Y/m/d', strtotime($chatData['details']->created_at));
     $htmlContent = str_replace("{{INQUIRY_DATE}}", $formattedDate, $htmlContent);
+
+    $htmlContent = str_replace("{SIDEBAR}", $sidebarHtml, $htmlContent);
+    $htmlContent = str_replace('{{PARENT_NAME}}', htmlspecialchars($parentName), $htmlContent);
 
     echo $htmlContent; 
 
