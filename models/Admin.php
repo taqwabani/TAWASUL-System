@@ -1,5 +1,5 @@
 <?php
-require_once 'user.php';
+require_once 'User.php';
 require_once 'Announcement.php';
 
 class Admin extends User {
@@ -25,6 +25,98 @@ class Admin extends User {
             
         } catch (PDOException $e) {
             // falseفي حال حدوث أي خطأ في قاعدة البيانات، يتم إرجاع قيمة 
+            return false;
+        }
+    }
+
+    // دالة تعديل إعلان موجود
+    public function updateAnnouncement(Announcement $announcement) {
+        try {
+            $sql = "UPDATE announcements SET title = ?, content = ?, imagePath = ? WHERE announcementID = ?";
+            // تحضير الاستعلام
+            $stmt = $this->db->prepare($sql);
+            
+            return $stmt->execute([
+                $announcement->getTitle(),
+                $announcement->getContent(),
+                $announcement->getImagePath(),
+                $announcement->getAnnouncementId()
+            ]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // دالة حذف إعلان
+    public function deleteAnnouncement($id) {
+        try {
+            $sql = "DELETE FROM announcements WHERE announcementID = ?";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([(int)$id]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // جلب كافة المستخدمين من قاعدة البيانات
+    public function getAllUsers() {
+        try {
+            $sql = "SELECT userID, userName, name, role FROM users ORDER BY userID DESC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    // حذف مستخدم من النظام
+    public function deleteUser($id) {
+        try {
+            // جلب بيانات المستخدم للتحقق من صلاحياته قبل الحذف
+            $user = $this->getUserById($id);
+            
+            // منع حذف أي حساب يتبع لـ "إدارة المدرسة" (role = admin) لضمان أمان النظام
+            if (!$user || $user->role === 'admin') return false;
+            
+            $sql = "DELETE FROM users WHERE userID = ?";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([(int)$id]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // إضافة مستخدم جديد للنظام (ولي أمر أو مدير)
+    public function addUser($name, $userName, $password, $role) {
+        try {
+            $sql = "INSERT INTO users (name, userName, password, role) VALUES (?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$name, $userName, $password, $role]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // جلب بيانات مستخدم معين بواسطة المعرف
+    public function getUserById($id) {
+        try {
+            $sql = "SELECT userID, userName, name, role FROM users WHERE userID = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([(int)$id]);
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
+    // تحديث بيانات مستخدم
+    public function updateUser($id, $name, $userName, $role) {
+        try {
+            $sql = "UPDATE users SET name = ?, userName = ?, role = ? WHERE userID = ?";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$name, $userName, $role, (int)$id]);
+        } catch (PDOException $e) {
             return false;
         }
     }

@@ -21,6 +21,9 @@
                 <a href="../pages/dashboard.php">
                     <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
                 </a>
+                <a href="../pages/viewAnnouncements.php">
+                    <img src="../images/lucide-Megaphone.svg" class="nav-icon"> إعلانات المدرسة
+                </a>
                 <a href="../pages/inquiries.php">
                     <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> الاستفسارات
                 </a>
@@ -41,7 +44,26 @@
                     <span>ولي الأمر: أحمد</span>
                 </div>
             </header>
-            </form>
+
+            <div style="padding: 20px;">
+                <!-- قسم الإعلانات السريعة -->
+                <div
+                    style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0; color: #010d50;">آخر الإعلانات</h3>
+                        <a href="../pages/viewAnnouncements.php"
+                            style="font-size: 0.8rem; color: #010d50; text-decoration: none; font-weight: bold;">عرض
+                            الكل ←</a>
+                    </div>
+
+                    <div class="latest-ads-container">
+                        {{LATEST_ANNOUNCEMENTS}}
+                    </div>
+                </div>
+
+                <!-- يمكنك هنا إضافة إحصائيات أخرى مستقبلاً مثل عدد الرسائل أو الغيابات -->
+            </div>
         </div>
     </div>
     </div>
