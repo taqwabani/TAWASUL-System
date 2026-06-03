@@ -22,7 +22,7 @@ if (!$data || !$data['details']) // التحقق من وجود بيانات لل
     }
 
 $inquiryInfo = $data['details'];// بيانات الاستفسار الأساسية
-$chatMessages = $data['chat'];// رسائل المحادثة
+$chatMessages = $data['chat'];// رسائل المحادثة الخاصة بهذا الاستفسار
 
 $messagesHTML = "";
 foreach ($chatMessages as $msg) {// المرور على جميع الرسائل لعرضها داخل صفحة المحادثة
