@@ -1,12 +1,12 @@
 <?php
 /*
 المحتوى
-ارسال استفسارات جديدة ، وعرض قائمة باستفساراته السابق
+ارسال استفسارات جديدة ، وعرض قائمة باستفسارات ولي الامر السابقه
 */
 session_start();
 
 require_once "../config/db_connect.php"; 
-require_once "../models/perent.php";
+require_once "../models/UserFactory.php";
 
 // التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
 if (!isset($_SESSION['userID'])) {
@@ -22,11 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send'])) {
     
     if (!empty($subject) && !empty($message)) {
         //للتعامل مع العمليات الخاصة بولي الأمر  ParentUser إنشاء كائن من كلاس
-        $parent = new ParentUser($conn);
+        $parent = UserFactory::create($conn, 'parent');
         $currentUserID = $_SESSION['userID']; 
     // استدعاء الدالة الخاصة بإرسال الاستفسار وتمرير البيانات لقاعدة البيانات
     if ($parent->sendInquiry($conn, $subject, $message,   $currentUserID)) {
-        header("Location: inquiries.php?status=success");
+        $_SESSION['status_success'] = true; // تخزين حالة النجاح في الجلسة
+        header("Location: inquiries.php"); // التحويل لصفحة من جديد
         exit();
     }
     }
@@ -39,6 +40,7 @@ $stmt->execute([$_SESSION['userID']]);
 $inquiries = $stmt->fetchAll();
 
 $rows_html = "";
+//  عرض جميع الاستفسارا في الجدول 
 foreach ($inquiries as $row) {
      
     $date = date("Y-m-d", strtotime($row['created_at']));
@@ -54,8 +56,20 @@ foreach ($inquiries as $row) {
         <td><span class='status {$statusClass}'>{$row['status']}</span></td>
     </tr>";
 }
+
+
+// التحقق منه تم ارسال الاستفساربنجاح
+$success_msg = "";
+if (isset($_SESSION['status_success'])) {
+    $success_msg = "<div style='background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center; font-weight: bold;'>تم إرسال استفسارك بنجاح.</div>";
+    unset($_SESSION['status_success']); // حذف الرسالة من الجلسة فوراً لكي لا تظهر عند التحديث
+}
+
+
+
 // HTML دمج المحتوى البرمجي مع قالب الـ 
 $html_template = file_get_contents("../HTML/inquiries.html");
-echo str_replace("{{INQUIRIES}}", $rows_html, $html_template);//بالصفوف الحقيقية التي تم تجهيزها {{INQUIRIES}}استبدال الكلمة المفتاحية  
+$html_template = str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
+echo str_replace("{{INQUIRIES}}", $rows_html, $html_template);//بالصفوف الحقيقية التي تم تجهيزها {{INQUIRIES}}استبدال الكلمة المفتاحية
 
 ?>
