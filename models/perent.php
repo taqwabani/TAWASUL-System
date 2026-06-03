@@ -1,7 +1,7 @@
 <?php
 
-include 'User.php';
-include 'Inquiry.php';
+require_once 'User.php';
+require_once 'Inquiry.php';
 
 //يمثل مستخدم من نوع "ولي أمر
 //  لخصائص   User  يرث من كلاس 

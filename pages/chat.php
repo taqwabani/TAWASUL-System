@@ -1,7 +1,10 @@
 <?php
-// chat.php
+/**
+ * صفحة الخاصة بمنظق عمل الشات لرد ع الاستفسارات الخاصة بالادمن
+ * 
+ */
 require_once "../config/db_connect.php"; 
-require_once "../models/Admin.php"; 
+require_once "../models/UserFactory.php"; 
 
 $inquiryId = isset($_GET['id']) ? $_GET['id'] : null;
 if (!$inquiryId)
@@ -9,7 +12,7 @@ if (!$inquiryId)
          die("خطأ: لم يتم تحديد استفسار.");
     }
 
-$admin = new Admin($conn);// إنشاء كائن من كلاس الإدارة للتعامل مع البيانات الخاصة بالاستفسارات والمحادثات
+$admin = UserFactory::create($conn, 'admin');// إنشاء كائن من كلاس الإدارة للتعامل مع البيانات الخاصة بالاستفسارات والمحادثات
 $data = $admin->viewInquiries($inquiryId);// جلب بيانات الاستفسار والمحادثة
 
 if (!$data || !$data['details']) // التحقق من وجود بيانات للاستفسار
@@ -26,6 +29,14 @@ foreach ($chatMessages as $msg) {// المرور على جميع الرسائل 
     // تمييز الرسالة بناء على المرسل
     $bubbleClass = ($msg->senderID == $inquiryInfo->parentID) ? 'parent-msg' : 'admin-msg';
     $senderLabel = ($msg->senderID == $inquiryInfo->parentID) ? 'ولي الأمر' : 'الإدارة';
+    // جلب المعرفات مع دعم اختلاف حالة الأحرف التي قد تنتج عن قاعدة البيانات
+    $msgSenderID = $msg->senderID ?? $msg->senderid ?? null;
+    $inquiryParentID = $inquiryInfo->parentID ?? $inquiryInfo->parentid ?? null;
+
+    // المقارنة الرقمية الصارمة لتحديد هوية المرسل
+    $isParent = ((int)$msgSenderID === (int)$inquiryParentID);
+    $bubbleClass = $isParent ? 'parent-msg' : 'admin-msg';
+    $senderLabel = $isParent ? 'ولي الأمر' : 'الإدارة';
        // إنشاء شكل الرسالة داخل المحادثة
     $messagesHTML .= "
     <div class='message-bubble {$bubbleClass}'>
@@ -39,7 +50,7 @@ foreach ($chatMessages as $msg) {// المرور على جميع الرسائل 
 
 
 $htmlFile = file_get_contents("../HTML/chat.html");
-die
+
 // استبدال القيم داخل ملف HTML
 $htmlFile = str_replace("{{parentName}}", htmlspecialchars($inquiryInfo->parentName), $htmlFile);
 $htmlFile = str_replace("{{subject}}", htmlspecialchars($inquiryInfo->subject), $htmlFile);
