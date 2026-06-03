@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة مستخدم جديد - TAWASUL</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/adminAnnouncements.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon">
+                    <h2>TAWASUL</h2>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="../pages/dashboardA.php"><img src="../images/lucide-LayoutDashboard.svg" class="nav-icon">
+                    الرئيسية</a>
+                <a href="../pages/adminAnnouncements.PHP"><img src="../images/lucide-Megaphone.svg" class="nav-icon">
+                    ادارة الاعلانات</a>
+                <a href="../pages/u.PHP" class="active"><img src="../images/lucide-Users.svg" class="nav-icon"> ادارة
+                    المستخدمين</a>
+                <a href="../pages/ViewAdminInquiries.php"><img src="../images/lucide-MessageSquare.svg"
+                        class="nav-icon"> ردود والاستفسارات</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">إضافة مستخدم جديد</div>
+            </header>
+
+            <div class="content-body">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>بيانات الحساب الجديد</h3>
+                        <p>أدخل المعلومات الأساسية لإنشاء حساب جديد في النظام</p>
+                    </div>
+
+                    {{MESSAGE}}
+
+                    <form action="../pages/addUser.php" method="POST">
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" name="name" placeholder="اسم ولي الأم" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>اسم المستخدم (ID)</label>
+                            <input type="text" name="userName" placeholder="اسم فريد لتسجيل الدخول" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>كلمة المرور المؤقتة</label>
+                            <input type="password" name="password" placeholder="••••••••" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                        </div>
+
+                        <div class="form-group">
+                            <label>الصلاحية</label>
+                            <select name="role"
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; font-family: inherit;">
+                                <option value="parent">ولي أمر</option>
+                                <option value="admin">مدير نظام</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary">إنشاء الحساب الآن</button>
+                        <a href="u.PHP" style="margin-right: 15px; color: #666; text-decoration: none;">إلغاء</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

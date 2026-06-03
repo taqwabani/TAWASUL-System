@@ -6,7 +6,7 @@
 session_start();
 
 require_once "../config/db_connect.php"; 
-require_once "../models/perent.php";
+require_once "../models/UserFactory.php";
 
 
 // التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send'])) {
     
     if (!empty($subject) && !empty($message)) {
         //للتعامل مع العمليات الخاصة بولي الأمر  ParentUser إنشاء كائن من كلاس
-        $parent = new ParentUser($conn);
+        $parent = UserFactory::create($conn, 'parent');
         $currentUserID = $_SESSION['userID']; 
     // استدعاء الدالة الخاصة بإرسال الاستفسار وتمرير البيانات لقاعدة البيانات
     if ($parent->sendInquiry($conn, $subject, $message,   $currentUserID)) {
@@ -58,7 +58,7 @@ foreach ($inquiries as $row) {
     $date = date("Y-m-d", strtotime($row['created_at']));
 
     $statusClass = ($row['status'] == 'تم الرد') ? 'replied' : 'pending';
-    
+    // تجهيز صف الجدول لكل استفسار مع رابط لصفحة الرسائل الخاصة به، وعرض الحالة والتاريخ والموضوع
     $rows_html .= "<tr>
         <td><a href='../pages/parentChat.php?id={$row['inquiryID']}'>
                 <img src='../images/lucide-MessageSquare.svg' class='action-icon'>

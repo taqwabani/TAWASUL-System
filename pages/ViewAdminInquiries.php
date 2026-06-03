@@ -1,7 +1,6 @@
 <?php
-/**
- * الواجهة الخاصة بعرض قائمة الاستفسارات للادمن
- */
+
+
 require_once "../config/db_connect.php"; 
 require_once "../models/Admin.php"; 
 

@@ -22,13 +22,21 @@ if (!$data || !$data['details']) // التحقق من وجود بيانات لل
     }
 
 $inquiryInfo = $data['details'];// بيانات الاستفسار الأساسية
-$chatMessages = $data['chat'];// رسائل المحادثة
+$chatMessages = $data['chat'];// رسائل المحادثة الخاصة بهذا الاستفسار
 
 $messagesHTML = "";
 foreach ($chatMessages as $msg) {// المرور على جميع الرسائل لعرضها داخل صفحة المحادثة
     // تمييز الرسالة بناء على المرسل
     $bubbleClass = ($msg->senderID == $inquiryInfo->parentID) ? 'parent-msg' : 'admin-msg';
     $senderLabel = ($msg->senderID == $inquiryInfo->parentID) ? 'ولي الأمر' : 'الإدارة';
+    // جلب المعرفات مع دعم اختلاف حالة الأحرف التي قد تنتج عن قاعدة البيانات
+    $msgSenderID = $msg->senderID ?? $msg->senderid ?? null;
+    $inquiryParentID = $inquiryInfo->parentID ?? $inquiryInfo->parentid ?? null;
+
+    // المقارنة الرقمية الصارمة لتحديد هوية المرسل
+    $isParent = ((int)$msgSenderID === (int)$inquiryParentID);
+    $bubbleClass = $isParent ? 'parent-msg' : 'admin-msg';
+    $senderLabel = $isParent ? 'ولي الأمر' : 'الإدارة';
        // إنشاء شكل الرسالة داخل المحادثة
     $messagesHTML .= "
     <div class='message-bubble {$bubbleClass}'>

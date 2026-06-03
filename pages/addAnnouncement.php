@@ -1,7 +1,4 @@
 <?php
-/**
- * صفحة الخاصة بمنطق عمل اضافة اعلان جديد 
- */
 session_start(); 
 
 require_once '../config/db_connect.php'; 
@@ -40,25 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newAnnouncement = new Announcement($announcementTitle, $announcementContent, $imagePath);
     // تنفيذ عملية الإضافة في قاعدة البيانات والتحقق من نجاحها
     if ($currentAdmin->addAnnouncement($newAnnouncement)) {
-        $_SESSION['announcement_success'] = true; // تخزين حالة النجاح في الجلسة
-        header("Location: addAnnouncement.php"); // العودة لصفحة 
+        header("Location: adminAnnouncements.php?success=1");// إعادة التوجيه لصفحة عرض الإعلانات مع إرسال رسالة نجاح
         exit();
     } else {
         // إظهار رسالة خطأ في حال فشل الاستعلام في قاعدة البيانات
         echo "حدث خطأ أثناء إضافة الإعلان في قاعدة البيانات.";
     }
 }
-
-// منطق عرض الصفحة (GET)
-$success_msg = "";
-if (isset($_SESSION['announcement_success'])) {
-    // رسالة النجاح مع تنسيق
-    $success_msg = "<div style='background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center; font-weight: bold;'> تم نشر الإعلان بنجاح!</div>";
-    unset($_SESSION['announcement_success']); // حذف الرسالة من الجلسة فورا لكي لا تظهر عند التحديث
-}
-
-// قراءة القالب واستبدال العلامة المحجوزة
-$html_template = file_get_contents("../HTML/addAnnouncement.html");
-echo str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
-
 ?>
