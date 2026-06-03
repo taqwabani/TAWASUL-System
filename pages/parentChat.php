@@ -21,7 +21,7 @@ if (!$currentInquiryID) {
 }
 
 try {
-    
+    //الحصول على  نسخة وحدة من الاتصال  بقاعدة البيانات
     $database = Database::getInstance();
     $conn = $database->getConnection();
 

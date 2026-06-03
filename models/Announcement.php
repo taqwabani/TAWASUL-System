@@ -27,7 +27,7 @@ class Announcement {
 
 
 
-   public function getLatestAnnouncements($db, $limit = 5) {
+    public function getLatestAnnouncements($db, $limit = 5) {
         try {
             $sql = "SELECT title, content, imagePath, createdAt FROM announcements ORDER BY createdAt DESC LIMIT :limit";
             $stmt = $db->prepare($sql);

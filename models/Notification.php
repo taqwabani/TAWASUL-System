@@ -3,6 +3,11 @@
 class NotificationManager {
     private $db;
 
+    private $id;
+    private $title;
+    private $message;
+    private $createdAt;
+
     public function __construct($db) {
         $this->db = $db;
     }

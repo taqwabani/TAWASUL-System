@@ -26,7 +26,7 @@ class Database {
             die("خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
         }
     }
-
+   // نقطة الوصول الوحيدة للحصول على الكائن
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new Database();
