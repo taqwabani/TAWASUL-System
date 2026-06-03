@@ -1,8 +1,7 @@
 <?php
 session_start();// بدء الجلسة  لحفظ رسائل الخطأ وبيانات المستخدم
 include "config/db_connect.php";
-include "models/User.php";
-
+include "models/UserFactory.php";
 // متغير لتخزين رسالة الخطأ وعرضها داخل الصفحة
 $error = "";
 
@@ -14,12 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['loginBtn'])) {
          // تخزين اسم المستخدم وكلمة المرور القادمة من النموذج
         $u = $_POST['userName'];
         $p = $_POST['password'];
-        $user = new User($conn); // إنشاء كائن من كلاس User
         
-        if ($user->validateLogin($u, $p)) {   // التحقق من صحة بيانات تسجيل الدخول
-
+        // نستخدم كائن مستخدم عام للتحقق الأولي
+        $tempUser = new User($conn); 
+        if ($tempUser->validateLogin($u, $p)) {   // التحقق من صحة بيانات تسجيل الدخول
+            
+            // بعد النجاح، نستخدم المصنع لإنشاء الكائن المتخصص (Admin أو Parent)
+            $role = $tempUser->getRole();
+            $user = UserFactory::create($conn, $role);
+            $user->setUserId($tempUser->getUserId());
+            $user->setRole($role);
+            $user->setName($tempUser->getName());
             $user->login(); // إنشاء جلسة للمستخدم بعد نجاح تسجيل الدخول
-           
           // التحقق من نوع المستخدم
             if ($user->getRole() == 'admin') {
 

@@ -1,7 +1,8 @@
 <?php
 
-
-
+/**
+ * كلاس الاعلانات يحتوي على خصائصه ودوال للوصول الى البيانات عند الحاجة 
+ */
 class Announcement {
 
     private $announcementId;
@@ -23,10 +24,5 @@ class Announcement {
     public function getContent() { return $this->content; }
     public function getImagePath() { return $this->imagePath; }
     public function getDate() { return $this->date; }
-}
-
-
-
-
+    }
 ?>
-
