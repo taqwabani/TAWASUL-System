@@ -1,10 +1,11 @@
 <?php
-
-
+/**
+ * الواجهة الخاصة بعرض قائمة الاستفسارات للادمن
+ */
 require_once "../config/db_connect.php"; 
-require_once "../models/Admin.php"; 
+require_once "../models/UserFactory.php"; 
 
-$admin = new Admin($conn);
+$admin = UserFactory::create($conn, 'admin');
 $inquiries = $admin->viewInquiries();// جلب جميع الاستفسارات
 
 
