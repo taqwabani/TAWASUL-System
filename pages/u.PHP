@@ -62,3 +62,4 @@ $html_template = str_replace("{{USERS_TABLE}}", $rows_html, $html_template);
 $html_template = str_replace("{{STATUS_MESSAGE}}", $status_msg, $html_template);
 
 echo $html_template;
+?>

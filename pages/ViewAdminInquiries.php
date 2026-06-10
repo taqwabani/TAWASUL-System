@@ -4,6 +4,10 @@
 require_once "../config/db_connect.php"; 
 require_once "../models/Admin.php"; 
 
+$database = Database::getInstance();
+$conn = $database->getConnection(); 
+
+
 $admin = new Admin($conn);
 $inquiries = $admin->viewInquiries();// جلب جميع الاستفسارات
 
