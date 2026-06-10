@@ -35,14 +35,8 @@ if (!empty($inquiries)) {
     $tableRows = "<tr><td colspan='5' style='text-align:center; padding: 20px;'>لا توجد استفسارات واردة بعد.</td></tr>";
 }
 
-// استخدام المسار المطلق لتجنب خطأ "No such file or directory"
-$htmlPath = __DIR__ . "/../HTML/ViewAdminInquiries.html";
-if (file_exists($htmlPath)) {
-    $htmlContent = file_get_contents($htmlPath);
-} else {
-    die("Error: HTML template not found at " . $htmlPath);
-}
 
+$htmlPath =  "/../HTML/ViewAdminInquiries.html";
 $finalOutput = str_replace("{{INQUIRIES_TABLE}}", $tableRows, $htmlContent);
 echo $finalOutput;
 ?>
