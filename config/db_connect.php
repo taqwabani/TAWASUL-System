@@ -8,7 +8,7 @@ class Database {
     private $conn;
 
     private $host = "localhost";
-    private $dbName = "tawasul_db";
+    private $dbName = "tawasul db";
     private $username = "root";
     private $password = "";
 

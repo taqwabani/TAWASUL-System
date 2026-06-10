@@ -6,6 +6,10 @@ require_once "../config/db_connect.php";
 require_once "../models/UserFactory.php"; 
 $conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
 
+$database = Database::getInstance();
+$conn = $database->getConnection(); 
+
+
 $admin = UserFactory::create($conn, 'admin');
 $inquiries = $admin->viewInquiries();// جلب جميع الاستفسارات
 

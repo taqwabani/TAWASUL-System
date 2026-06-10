@@ -34,13 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['loginBtn'])) {
     
     
              $userObject = UserFactory::createUser($user->getRole(), $conn, $userData);
-             $_SESSION['user'] = $userObject;
-
+                 $_SESSION['userID'] = $userObject->getUserId();
+                 $_SESSION['role'] = $userObject->getRole();
+                 $_SESSION['name'] = $userObject->getName();
             $userObject->login(); // إنشاء جلسة للمستخدم بعد نجاح تسجيل الدخول
              
-            if ($userObject instanceof Admin) {//للتحقق من نوع الكائن وتوجيهه للوحة التحكم الصحيحة
+            if ($userObject instanceof Admin) {
                 header("Location: pages/dashboardA.php");
-            } else {
+
+            } elseif ($userObject instanceof ParentUser ) {
+                
                 header("Location: pages/dashboard.php");
             }
             exit(); 
