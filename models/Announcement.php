@@ -1,7 +1,8 @@
 <?php
 
-
-
+/**
+ * كلاس الاعلانات يحتوي على خصائصه ودوال للوصول الى البيانات عند الحاجة 
+ */
 class Announcement {
 
     private $announcementId;
@@ -23,8 +24,38 @@ class Announcement {
     public function getImagePath() { return $this->imagePath; }
     public function getDate() { return $this->date; }
 
+    public function getAnnouncementId() { return $this->announcementId; }
+    public function setAnnouncementId($id) { $this->announcementId = $id; }
 
+    /**
+     * جلب كافة الإعلانات لشاشة الإدارة
+     */
+    public static function getAllAnnouncements($db) {
+        try {
+            $sql = "SELECT * FROM announcements ORDER BY createdAt DESC";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("خطأ في جلب كافة الإعلانات: " . $e->getMessage());
+            return [];
+        }
+    }
 
+    /**
+     * جلب إعلان محدد بواسطة المعرف
+     */
+    public static function getById($db, $id) {
+        try {
+            $sql = "SELECT * FROM announcements WHERE announcementID = ?";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([(int)$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("خطأ في جلب الإعلان: " . $e->getMessage());
+            return null;
+        }
+    }
 
     public function getLatestAnnouncements($db, $limit = 5) {
         try {
@@ -43,4 +74,3 @@ class Announcement {
 }
 
 ?>
-

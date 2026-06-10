@@ -1,14 +1,16 @@
 <?php
-
-
+/**
+ * الواجهة الخاصة بعرض قائمة الاستفسارات للادمن
+ */
 require_once "../config/db_connect.php"; 
-require_once "../models/Admin.php"; 
+require_once "../models/UserFactory.php"; 
+$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
 
 $database = Database::getInstance();
 $conn = $database->getConnection(); 
 
 
-$admin = new Admin($conn);
+$admin = UserFactory::create($conn, 'admin');
 $inquiries = $admin->viewInquiries();// جلب جميع الاستفسارات
 
 
@@ -17,6 +19,7 @@ if (!empty($inquiries)) {
     foreach ($inquiries as $item) { // المرور على جميع الاستفسارات
         $statusClass = ($item->status == 'قيد الانتظار') ? 'pending' : 'replied'; // تحديد كلاس الحالة حسب حالة الاستفسار
         $formattedDate = date('Y/m/d', strtotime($item->created_at));
+        $formattedDate = $item->created_at ? date('Y/m/d', strtotime($item->created_at)) : 'غير محدد';
 //تنسيق التاريخ لعرضه بشكل مناسب في الجدول
         $tableRows .= "<tr>
             <td>" . htmlspecialchars($item->parentName) . "</td>
@@ -36,7 +39,14 @@ if (!empty($inquiries)) {
     $tableRows = "<tr><td colspan='5' style='text-align:center; padding: 20px;'>لا توجد استفسارات واردة بعد.</td></tr>";
 }
 
-$htmlContent = file_get_contents("../HTML/ViewAdminInquiries.html");
+// استخدام المسار المطلق لتجنب خطأ "No such file or directory"
+$htmlPath = __DIR__ . "/../HTML/ViewAdminInquiries.html";
+if (file_exists($htmlPath)) {
+    $htmlContent = file_get_contents($htmlPath);
+} else {
+    die("Error: HTML template not found at " . $htmlPath);
+}
+
 $finalOutput = str_replace("{{INQUIRIES_TABLE}}", $tableRows, $htmlContent);
 echo $finalOutput;
 ?>

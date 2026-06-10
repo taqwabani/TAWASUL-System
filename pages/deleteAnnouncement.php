@@ -10,6 +10,8 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin' || !isset($_GET
 }
 
 $id = (int)$_GET['id'];
+$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
+
 $announcement = Announcement::getById($conn, $id);
 
 if ($announcement) {

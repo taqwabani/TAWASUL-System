@@ -1,17 +1,18 @@
 <?php
-session_start(); 
+session_start();
 
 // التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
 if (!isset($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
 }
+
 require_once "../config/db_connect.php"; 
 require_once "../models/Announcement.php";
 
-
 $database = Database::getInstance();
 $conn = $database->getConnection();
+
 // جلب اسم ولي الأمر المخزن في السيسشن أثناء عملية تسجيل الدخول بنجاح
 $parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "زائر";
 
@@ -62,4 +63,3 @@ $finalPageContent = str_replace('{{PARENT_NAME}}', htmlspecialchars($parentName)
 $finalPageContent = str_replace('{{ANNOUNCEMENTS_LIST}}', $announcementsHtml, $finalPageContent);
 
 echo $finalPageContent;
-?>

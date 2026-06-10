@@ -18,7 +18,8 @@
 }
 
 .header-text h2 {
-    color: #001f3f; /* الأزرق الداكن الخاص بكِ */
+    color: #001f3f;
+    /* الأزرق الداكن الخاص بكِ */
     margin-bottom: 5px;
 }
 
@@ -88,10 +89,17 @@
     font-weight: 500;
 }
 
-.action-link.edit { color: #001f3f; }
-.action-link.delete { color: #dc3545; }
+.action-link.edit {
+    color: #001f3f;
+}
 
-.action-link:hover { text-decoration: underline; }
+.action-link.delete {
+    color: #dc3545;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
 
 
 
@@ -109,11 +117,21 @@
     padding-bottom: 15px;
 }
 
-.form-header h3 { color: #001f3f; margin-bottom: 5px; }
-.form-header p { color: #777; font-size: 0.9rem; }
+.form-header h3 {
+    color: #001f3f;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: #777;
+    font-size: 0.9rem;
+}
 
 /* تنسيق الحقول */
-.input-group { margin-bottom: 20px; }
+.input-group {
+    margin-bottom: 20px;
+}
+
 .input-group label {
     display: block;
     margin-bottom: 8px;
@@ -121,7 +139,7 @@
     color: #333;
 }
 
-.input-group input[type="text"], 
+.input-group input[type="text"],
 .input-group textarea {
     width: 100%;
     padding: 12px;
@@ -131,10 +149,11 @@
     transition: 0.3s;
 }
 
-.input-group input:focus, .input-group textarea:focus {
+.input-group input:focus,
+.input-group textarea:focus {
     border-color: #001f3f;
     outline: none;
-    box-shadow: 0 0 5px rgba(0,31,63,0.1);
+    box-shadow: 0 0 5px rgba(0, 31, 63, 0.1);
 }
 
 /* زر الإلغاء */
@@ -159,7 +178,8 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     opacity: 0;
     cursor: pointer;
 }
@@ -170,12 +190,12 @@
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    
-    margin: 20px; 
-    width: auto; 
-    box-sizing: border-box; 
-    
-    overflow: hidden; 
+
+    margin: 20px;
+    width: auto;
+    box-sizing: border-box;
+
+    overflow: hidden;
 }
 
 
@@ -186,19 +206,22 @@
     }
 
     .btn-primary-dark {
-        width: 100%; /* الزر يأخذ العرض كامل */
+        width: 100%;
+        /* الزر يأخذ العرض كامل */
         text-align: center;
     }
 }
+
 @media (max-width: 600px) {
+
     /* إخفاء رأس الجدول */
     .announcement-table thead {
         display: none;
     }
 
-    .announcement-table, 
-    .announcement-table tbody, 
-    .announcement-table tr, 
+    .announcement-table,
+    .announcement-table tbody,
+    .announcement-table tr,
     .announcement-table td {
         display: block;
         width: 100%;
@@ -210,7 +233,7 @@
         border-radius: 12px;
         background: #fff;
         padding: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     .announcement-table td {
@@ -226,7 +249,8 @@
 
     /* إضافة تسميات جانبية لكل خلية */
     .announcement-table td::before {
-        content: attr(data-label); /* تأكدي من إضافة هذه الخاصية في HTML */
+        content: attr(data-label);
+        /* تأكدي من إضافة هذه الخاصية في HTML */
         font-weight: bold;
         color: #001f3f;
     }
@@ -236,8 +260,10 @@
         height: 60px;
     }
 }
+
 body {
-    overflow-x: hidden; /* يمنع ظهور شريط التمرير العرضي نهائياً */
+    overflow-x: hidden;
+    /* يمنع ظهور شريط التمرير العرضي نهائياً */
     margin: 0;
     padding: 0;
 }

@@ -13,4 +13,8 @@ class UserFactory {
                 throw new Exception("دور المستخدم غير معروف!");
         }
     }
+
+    public static function create($db, $role) {
+        return self::createUser($role, $db, null);
+    }
 }

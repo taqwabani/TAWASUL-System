@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['loginBtn'])) {
          // تخزين اسم المستخدم وكلمة المرور القادمة من النموذج
         $u = $_POST['userName'];
         $p = $_POST['password'];
-        $user = new User($conn); // إنشاء كائن من كلاس User
         
         if ($user->validateLogin($u, $p)) {   // التحقق من صحة بيانات تسجيل الدخول
             

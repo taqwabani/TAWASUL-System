@@ -16,7 +16,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
 
 // جلب معرف الإعلان من الرابط   لنوع رقمي لمنع ثغرات   Injection
 $announcementID = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
+$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
 // استدعاء دالة جلب بيانات الإعلان من كائن الـ Announcement بناءً على المعرف (ID)
 $announcementData = Announcement::getById($conn, $announcementID);
 
