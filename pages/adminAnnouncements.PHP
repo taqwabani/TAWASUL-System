@@ -12,6 +12,10 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
+$database = Database::getInstance();
+$conn = $database->getConnection();
+
 // جلب جميع الإعلانات
 $announcements = Announcement::getAllAnnouncements($conn);
 $rows_html = "";

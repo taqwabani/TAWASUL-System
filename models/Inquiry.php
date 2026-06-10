@@ -54,6 +54,48 @@ class Inquiry {
     }
 }
 
+    /**
+     * جلب الاستفسارات أو تفاصيل استفسار محدد مع رسائله
+     */
+    public function viewInquiries($inquiryId = null) {
+        try {
+            if ($inquiryId) {
+                // جلب بيانات الاستفسار 
+                $sqlInfo = "SELECT i.*, u.name as parentName 
+                            FROM inquiries i 
+                            JOIN users u ON i.parentID = u.userID 
+                            WHERE i.inquiryID = ?";
+                $stmt1 = $this->db->prepare($sqlInfo);
+                $stmt1->execute([$inquiryId]);
+                $info = $stmt1->fetch(PDO::FETCH_OBJ);
+
+                // جلب الرسائل المرتبطة من جدول messages بترتيب زمني تصاعدي
+                $sqlMsgs = "SELECT * FROM messages WHERE inquiryID = ? ORDER BY timestamp ASC";
+                $stmt2 = $this->db->prepare($sqlMsgs);
+                $stmt2->execute([$inquiryId]);
+                $messages = $stmt2->fetchAll(PDO::FETCH_OBJ);
+
+                return [
+                    'details' => $info,
+                    'chat' => $messages
+                ];
+            } else {
+                // في حال عدم وجود معرف، جلب قائمة كافة الاستفسارات (للمدير)
+                $sql = "SELECT i.inquiryID as inquiryId, i.status, i.subject, i.created_at, u.name as parentName 
+                        FROM inquiries i 
+                        JOIN users u ON i.parentID = u.userID 
+                        ORDER BY i.inquiryID DESC";
+                
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute();
+                
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
+            }
+        } catch (PDOException $e) {
+            return ($inquiryId) ? null : [];
+        }
+    }
+
 }
 
 

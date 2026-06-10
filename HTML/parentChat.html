@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مركز الاستفسارات - المحادثة</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/parentChat.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        {SIDEBAR}
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">مركز الاستفسارات</div>
+                <div class="user-info"><span>ولي الأمر: {{PARENT_NAME}}</span></div>
+            </header>
+
+            <a href="../pages/inquiries.php" class="back-link" style="display: inline-block; margin: 15px 20px 0; text-decoration: none; color: #001f3f; font-weight: bold;">
+                 العودة لقائمة الاستفسارات 
+            </a>
+
+            <div class="chat-container">
+                <div class="inquiry-info-card">
+                    <h3>بيانات الاستفسار</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>موضوع الاستفسار</strong>
+                            <span>{{INQUIRY_SUBJECT}}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>تاريخ الارسال</strong>
+                            <span>{{INQUIRY_DATE}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-thread">
+                    {{CHAT_MESSAGES}}
+                </div>
+
+                <div class="reply-box">
+                    <form action="parentChat.php?id={{INQUIRY_ID}}" method="POST">
+                        <textarea name="messageText" rows="4" placeholder="اكتب رسالتك هنا..." style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px; resize: none; margin-bottom: 10px; font-family: inherit;"></textarea>
+                        <button type="submit" class="send-btn">
+                            <img src="../images/lucide-Send.svg">
+                            إرسال الرسالة الآن
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

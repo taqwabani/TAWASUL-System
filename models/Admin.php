@@ -4,9 +4,17 @@ require_once 'Announcement.php';
 
 class Admin extends User {
     //بتهيئة اتصال قاعدة البيانات عند إنشاء كائن جديد
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct($db,$userData = null) {
+        parent::__construct($db);
+        if ($userData) {
+            $this->userID = $userData['userID'];
+            $this->userName = $userData['userName'];
+            $this->name = $userData['name'];
+            $this->role = $userData['role'];
+        }
+
     }
+    
     //دالة الخاصة باضافة اعلان
     public function addAnnouncement(Announcement $announcement) {
         try {

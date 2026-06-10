@@ -11,6 +11,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
+$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
 
 $admin = new Admin($conn);
 $admin->setUserId($_SESSION['userID']);

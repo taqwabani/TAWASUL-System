@@ -1,6 +1,6 @@
 <?php
 
-require_once 'User.php';
+require_once 'user.php';
 require_once 'Inquiry.php';
 
 //يمثل مستخدم من نوع "ولي أمر
@@ -8,6 +8,16 @@ require_once 'Inquiry.php';
 
 class ParentUser extends User { 
     
+    public function __construct($db,$userData = null) {
+        parent::__construct($db);
+        if ($userData) {
+            $this->userID = $userData['userID'];
+            $this->userName = $userData['userName'];
+            $this->name = $userData['name'];
+            $this->role = $userData['role'];
+        }
+    }
+
     //دالة إرسال استفسار
     //تعمل كوسيط بين الواجهة وبين كلاس الاستفسار لتنفيذ عمليةالارسال
     public function sendInquiry($db, $subject, $messageText, $userID) {

@@ -71,6 +71,5 @@ class User {
     public function getUserName() { return $this->userName; }
     public function getName() { return $this->name; }
     public function getRole() { return $this->role; }   // Getter للحصول على صلاحية المستخدم
-   
 }
 ?>

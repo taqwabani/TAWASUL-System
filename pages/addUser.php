@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userName = $_POST['userName'];
     $password = $_POST['password']; // ملاحظة: يفضل تشفير كلمة المرور مستقبلاً
     $role = $_POST['role'];
+$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
 
     $admin = UserFactory::create($conn, 'admin');
     $admin->setUserId($_SESSION['userID']);

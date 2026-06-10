@@ -1,10 +1,17 @@
 <?php
 session_start();// بدء الجلسة  لحفظ رسائل الخطأ وبيانات المستخدم
-include "config/db_connect.php";
-include "models/UserFactory.php";
+
+require_once "config/db_connect.php";
+require_once "models/Admin.php";
+require_once "models/perent.php";
+require_once "models/UserFactory.php";
+
 // متغير لتخزين رسالة الخطأ وعرضها داخل الصفحة
 $error = "";
+$database = Database::getInstance();
+$conn = $database->getConnection(); 
 
+$user = new User($conn); 
 // التحقق هل تم إرسال النموذج باستخدام POST
 // وأيضًا التأكد من الضغط على زر تسجيل الدخول
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['loginBtn'])) {
@@ -14,35 +21,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['loginBtn'])) {
         $u = $_POST['userName'];
         $p = $_POST['password'];
         
-        // نستخدم كائن مستخدم عام للتحقق الأولي
-        $tempUser = new User($conn); 
-        if ($tempUser->validateLogin($u, $p)) {   // التحقق من صحة بيانات تسجيل الدخول
+        if ($user->validateLogin($u, $p)) {   // التحقق من صحة بيانات تسجيل الدخول
             
-            // بعد النجاح، نستخدم المصنع لإنشاء الكائن المتخصص (Admin أو Parent)
-            $role = $tempUser->getRole();
-            $user = UserFactory::create($conn, $role);
-            $user->setUserId($tempUser->getUserId());
-            $user->setRole($role);
-            $user->setName($tempUser->getName());
-            $user->login(); // إنشاء جلسة للمستخدم بعد نجاح تسجيل الدخول
-          // التحقق من نوع المستخدم
-            if ($user->getRole() == 'admin') {
 
-                  // إذا كان الإدارة يتم تحويله إلى لوحة تحكم 
+             $userData = [
+                'userID'   => $user->getUserId(),
+                'userName' => $u,
+                'name'     => $user->getName(), 
+                'role'     => $user->getRole()
+            ];
+
+    
+    
+             $userObject = UserFactory::createUser($user->getRole(), $conn, $userData);
+             $_SESSION['user'] = $userObject;
+
+            $userObject->login(); // إنشاء جلسة للمستخدم بعد نجاح تسجيل الدخول
+             
+            if ($userObject instanceof Admin) {//للتحقق من نوع الكائن وتوجيهه للوحة التحكم الصحيحة
                 header("Location: pages/dashboardA.php");
             } else {
-
-                // إذا كان ولي أمر يتم تحويله إلى لوحة تحكم ولي الأمر
                 header("Location: pages/dashboard.php");
             }
-            exit();
-        } else {
-             //Session حفظ رسالة الخطأ مؤقتًا داخل 
+            exit(); 
+        }else {
+            // حالة فشل تسجيل الدخول
             $_SESSION['error'] = "اسم المستخدم أو كلمة المرور غير صحيحة";
-            
-            header("Location: login.php"); // إعادة التوجيه لنفس صفحة تسجيل الدخول
+            header("Location: login.php");
             exit();
         }
+                
     } catch (Exception $e) {
         
         $_SESSION['error'] = "حدث خطأ ، حاول لاحقاً";  // في حال حدوث خطأ تقني يتم حفظ رسالة خطأ عامة

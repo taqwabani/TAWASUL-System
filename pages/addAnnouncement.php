@@ -14,6 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagePath = ""; // متغير افتراضي لمسار الصورة في حال لم يتم رفع صورة
 // التحقق من وجود ملف مرفوع وعدم وجود أخطاء في عملية الرفع
     if (isset($_FILES['announcementImage']) && $_FILES['announcementImage']['error'] == 0) {
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $fileName = $_FILES['announcementImage']['name'];
+        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        if (!in_array($fileExt, $allowedExtensions)) {
+            die("خطأ: نوع الملف غير مسموح به. يرجى رفع صور فقط (jpg, png, gif).");
+        }
+
         // تحديد المجلد المستهدف لرفع الصور
         $targetDir = "../uploads/";
         // إنشاء المجلد تلقائيا إذا لم يكن موجودا مع إعطاء صلاحيات الكتابة 
@@ -23,11 +31,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //  لتجنب تكرار الأسماء وتداخل الملفات time()انشاء اسم فريد للملف باستخدام دالة 
         $fileName = time() . "_" . basename($_FILES["announcementImage"]["name"]);
         $targetFilePath = $targetDir . $fileName;
+        $newFileName = time() . "_" . bin2hex(random_bytes(5)) . "." . $fileExt;
+        $targetFilePath = $targetDir . $newFileName;
         // نقل الملف من المجلد المؤقت في السيرفر إلى المجلد الدائم للمشروع
         if (move_uploaded_file($_FILES["announcementImage"]["tmp_name"], $targetFilePath)) {
             $imagePath = "uploads/" . $fileName; 
+            $imagePath = "uploads/" . $newFileName; 
         }
     }
+    $conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
+
     // إنشاء كائن من كلاس الادمن وتمرير اتصال قاعدة البيانات له
     $currentAdmin = new Admin($conn); 
 
@@ -35,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_SESSION['userID'])) {
         $currentAdmin->setUserId($_SESSION['userID']);
     }
+    
     // إنشاء كائن إعلان جديد وتمرير كافة البيانات (العنوان، المحتوى، مسار الصورة)
     $newAnnouncement = new Announcement($announcementTitle, $announcementContent, $imagePath);
     // تنفيذ عملية الإضافة في قاعدة البيانات والتحقق من نجاحها
@@ -59,16 +73,4 @@ if (isset($_SESSION['announcement_success'])) {
 // قراءة القالب واستبدال العلامة المحجوزة
 $html_template = file_get_contents("../HTML/addAnnouncement.html");
 echo str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
-// منطق عرض الصفحة (GET)
-$success_msg = "";
-if (isset($_SESSION['announcement_success'])) {
-    // رسالة النجاح مع تنسيق
-    $success_msg = "<div style='background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center; font-weight: bold;'> تم نشر الإعلان بنجاح!</div>";
-    unset($_SESSION['announcement_success']); // حذف الرسالة من الجلسة فورا لكي لا تظهر عند التحديث
-}
-
-// قراءة القالب واستبدال العلامة المحجوزة
-$html_template = file_get_contents("../HTML/addAnnouncement.html");
-echo str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
-
 ?>

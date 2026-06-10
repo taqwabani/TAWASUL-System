@@ -4,7 +4,7 @@
  * 
  */
 require_once "../config/db_connect.php"; 
-require_once "../models/UserFactory.php"; 
+require_once "../models/Inquiry.php"; //عدلت هني
 
 $inquiryId = isset($_GET['id']) ? $_GET['id'] : null;
 if (!$inquiryId)
@@ -12,8 +12,8 @@ if (!$inquiryId)
          die("خطأ: لم يتم تحديد استفسار.");
     }
 
-$admin = UserFactory::create($conn, 'admin');// إنشاء كائن من كلاس الإدارة للتعامل مع البيانات الخاصة بالاستفسارات والمحادثات
-$data = $admin->viewInquiries($inquiryId);// جلب بيانات الاستفسار والمحادثة
+$inquiry = new Inquiry($conn);
+$data = $inquiry->viewInquiries($inquiryId);
 
 if (!$data || !$data['details']) // التحقق من وجود بيانات للاستفسار
     {

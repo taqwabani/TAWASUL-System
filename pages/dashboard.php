@@ -1,51 +1,65 @@
 <?php
 session_start();
-include('../config/db_connect.php');
-require_once "../models/Announcement.php";
 
-// التحقق من تسجيل الدخول لحماية الصفحة
+// التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
 if (!isset($_SESSION['userID'])) {
     header("Location: ../login.php");
     exit();
 }
 
-//  جلب آخر 3 إعلانات من قاعدة البيانات
-$latest = Announcement::getLatestAnnouncements($conn, 3);
-$announcements_cards = "";
-if (!empty($latest)) {
-    foreach ($latest as $ad) {
-        $title = htmlspecialchars($ad['title']);
-        
-        // معالجة التاريخ بشكل آمن (دعم التسميتين created_at أو createdAt)
-        $raw_date = isset($ad['createdAt']) ? $ad['createdAt'] : (isset($ad['created_at']) ? $ad['created_at'] : null);
-        $date = $raw_date ? date("Y-m-d", strtotime($raw_date)) : "تاريخ غير متوفر";
-        
-        $content = mb_strimwidth(htmlspecialchars($ad['content']), 0, 100, "..."); // اختصار النص
+require_once "../config/db_connect.php"; 
+require_once "../models/Announcement.php";
 
-        // معالجة عرض الصورة في حال وجودها (خيار الصور)
-        $img_tag = "";
-        if (!empty($ad['imagePath'])) {
-            $img_url = "../" . $ad['imagePath'];
-            $img_tag = "<img src='{$img_url}' style='width: 60px; height: 60px; object-fit: cover; border-radius: 6px; margin-left: 15px; border: 1px solid #ddd;'>";
+$database = Database::getInstance();
+$conn = $database->getConnection();
+
+// جلب اسم ولي الأمر المخزن في السيسشن أثناء عملية تسجيل الدخول بنجاح
+$parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "زائر";
+
+$anno = new Announcement();
+$announcementsFromDB = $anno->getLatestAnnouncements($conn, 5); // جلب آخر 5 مستجدات
+
+$announcementsHtml = "";
+
+if (!empty($announcementsFromDB)) {
+    foreach ($announcementsFromDB as $ann) {
+        $formattedDate = date("Y-m-d", strtotime($ann->createdAt));
+        
+        $imageHtml = "";
+        if (!empty($ann->imagePath)) {
+            $imageHtml = "
+            <div class='announcement-image-wrapper'>
+                <img src='../" . htmlspecialchars($ann->imagePath) . "' alt='مرفق الإعلان' class='announcement-img'>
+            </div>";
         }
 
-        $announcements_cards .= "
-        <div style='background: #fdfdfd; border-right: 4px solid #010d50; padding: 15px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center;'>
-            {$img_tag}
-            <div style='flex: 1;'>
-                <div style='display:flex; justify-content:space-between; align-items: center;'>
-                    <strong style='color:#010d50;'>$title</strong>
-                    <small style='color:#888;'>$date</small>
+        $announcementsHtml .= "
+        <div class='announcement-dashboard-card'>
+            <div class='announcement-card-content'>
+                <div class='announcement-card-header'>
+                    <h4 class='announcement-card-title'>" . htmlspecialchars($ann->title) . "</h4>
+                    <span class='announcement-card-date'>{$formattedDate}</span>
                 </div>
-                <p style='font-size: 0.9rem; color: #555; margin: 5px 0 0 0;'>$content</p>
+                <div class='announcement-card-body'>
+                    " . nl2br(htmlspecialchars($ann->content)) . "
+                </div>
             </div>
+            {$imageHtml}
         </div>";
     }
 } else {
-    $announcements_cards = "<p style='text-align:center; color:#888;'>لا توجد إعلانات جديدة حالياً.</p>";
+    // في حال كانت قاعدة البيانات فارغة من الإعلانات
+    $announcementsHtml = "<div style='text-align: center; color: #718096; padding: 20px;'>لا توجد إعلانات منشورة حالياً من قبل الإدارة.</div>";
 }
 
-// 3. قراءة ملف القالب واستبدال العلامة المحجوزة
-$html = file_get_contents('../HTML/dashboard.html');
-echo str_replace("{{LATEST_ANNOUNCEMENTS}}", $announcements_cards, $html);
-?>
+ob_start(); 
+include 'includes/sidebar.php'; 
+$sidebarHtml = ob_get_clean(); 
+
+$mainHtmlTemplate = file_get_contents("../HTML/dashboard.html");
+
+$finalPageContent = str_replace('{SIDEBAR}', $sidebarHtml, $mainHtmlTemplate);
+$finalPageContent = str_replace('{{PARENT_NAME}}', htmlspecialchars($parentName), $finalPageContent);
+$finalPageContent = str_replace('{{ANNOUNCEMENTS_LIST}}', $announcementsHtml, $finalPageContent);
+
+echo $finalPageContent;

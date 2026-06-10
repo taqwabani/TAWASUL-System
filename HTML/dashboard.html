@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>لوحة تحكم - TAWASUL</title>
     <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/viewAnnouncements.css">
 </head>
 
 <body>
@@ -38,17 +39,28 @@
             <header class="top-header">
                 <div class="page-title">لوحة التحكم الرئيسية</div>
                 <div class="user-info">
-                    <span>ولي الأمر: أحمد</span>
+                    <span>ولي الأمر: {{PARENT_NAME}}</span>
                 </div>
             </header>
 
-            <div style="padding: 20px;">
+            <main class="content-body">
+                <div class="dashboard-header">
+                    <p>تابع آخر الأخبار، الإعلانات، والتعميمات الرسمية الصادرة من إدارة المدرسة.</p>
+                </div>
 
-            </div>
+                <div class="announcements-section">
+                    <div class="section-subtitle">آخر المستجدات والإعلانات</div>
+
+                    {{ANNOUNCEMENTS_LIST}}
+
+                    <div class="view">
+                        <a href="../HTML/viewAllAnnouncements.html" class="btn-view-all">عرض كافة الإعلانات السابقة
+                            ←</a>
+                    </div>
+
+                </div>
+            </main>
         </div>
-    </div>
-    </div>
-    </div>
     </div>
 </body>
 
