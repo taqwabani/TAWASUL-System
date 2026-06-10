@@ -58,7 +58,7 @@ if (isset($_SESSION['user_msg'])) {
 }
 
 // ربط البيانات بالقالب
-$html_template = file_get_contents("../HTML/u.html");
+$html_template = file_get_contents("../HTML/user.html");
 $html_template = str_replace("{{USERS_TABLE}}", $rows_html, $html_template);
 $html_template = str_replace("{{STATUS_MESSAGE}}", $status_msg, $html_template);
 

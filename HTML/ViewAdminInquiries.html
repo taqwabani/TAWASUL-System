@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>إدارة الإعلانات - TAWASUL</title>
+    <title>إدارة الاستفسارات</title>
     <link rel="stylesheet" href="../CSS/inquiries.css">
-    <link rel="stylesheet" href="../CSS/adminAnnouncements.css">
+    <link rel="stylesheet" href="../CSS/ViewAdminInquiries.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                     <img src="../images/lucide-Users.svg" class="nav-icon"> ادارة المستخدمين
                 </a>
                 <a href="../pages/ViewAdminInquiries.php">
-                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon">  ردود والاستفسارات</a>
+                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> ردود والاستفسارات</a>
                 <a href="notifications.html">
                     <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
                 </a>
@@ -38,49 +38,35 @@
 
         <div class="main-content">
             <header class="top-header">
-                <div class="page-title">إدارة الإعلانات</div>
+                <div class="page-title">الردود والاستفسارات</div>
                 <div class="user-info">
                     <span>المدير : سالم</span>
                 </div>
             </header>
-
-            <div class="announcement-container">
-                <div class="page-header">
-                    <div class="header-text">
-                        <h2>الاعلانات</h2>
-                        <p>يمكنك نشر وإدارة الإعلانات الخاصة بالمدرسة</p>
-                    </div>
-                    <a href="../pages/addAnnouncement.php" class="btn-primary-dark">+ إضافة إعلان جديد</a>
+            <div class="main-body">
+                <div class="content-header">
+                    <h2>قائمة الاستفسارات</h2>
+                    <p>عرض وإدارة كافة الرسائل الواردة من أولياء الأمور</p>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="announcement-table">
+                <div class="table-card">
+                    <table class="inquiry-table">
                         <thead>
                             <tr>
-                                <th>الصورة</th>
-                                <th>عنوان الإعلان</th>
-                                <th>الكاتب</th>
-                                <th>تاريخ النشر</th>
+                                <th>ولي الأمر</th>
+                                <th>موضوع الاستفسار</th>
+                                <th>التاريخ</th>
+                                <th>الحالة</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="../uploads/default.jpg" class="thumb-img" alt="announcement"></td>
-                                <td><span class="ad-title">إعلان هام: موعد الامتحانات</span></td>
-                                <td>إدارة المدرسة</td>
-                                <td>12-5-2026</td>
-                                <td class="actions">
-                                    <a href="editAnnouncement.php" class="action-link edit">تعديل</a>
-                                    <a href="#" class="action-link delete">حذف</a>
-                                </td>
-                            </tr>
+                            {{INQUIRIES_TABLE}}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

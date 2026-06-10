@@ -12,6 +12,9 @@ if (!$inquiryId)
          die("خطأ: لم يتم تحديد استفسار.");
     }
 
+$database = Database::getInstance();
+$conn = $database->getConnection();
+    
 $inquiry = new Inquiry($conn);
 $data = $inquiry->viewInquiries($inquiryId);
 
