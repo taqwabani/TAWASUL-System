@@ -2,9 +2,12 @@
 /**
  * الواجهة الخاصة بعرض قائمة الاستفسارات للادمن
  */
+session_start();
 require_once "../config/db_connect.php"; 
 require_once "../models/UserFactory.php"; 
-$conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
+include 'includes/adminSidebar.php';
+
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
 $database = Database::getInstance();
 $conn = $database->getConnection(); 
@@ -39,14 +42,28 @@ if (!empty($inquiries)) {
     $tableRows = "<tr><td colspan='5' style='text-align:center; padding: 20px;'>لا توجد استفسارات واردة بعد.</td></tr>";
 }
 
-// استخدام المسار المطلق لتجنب خطأ "No such file or directory"
-$htmlPath = __DIR__ . "/../HTML/ViewAdminInquiries.html";
-if (file_exists($htmlPath)) {
-    $htmlContent = file_get_contents($htmlPath);
-} else {
-    die("Error: HTML template not found at " . $htmlPath);
-}
+ob_start();
+$sidebarHtml = ob_get_clean();
 
-$finalOutput = str_replace("{{INQUIRIES_TABLE}}", $tableRows, $htmlContent);
-echo $finalOutput;
+$htmlTemplate = file_get_contents("../HTML/ViewAdminInquiries.html");
+
+$htmlTemplate = str_replace(
+    "{{ADMIN_NAME}}",
+    htmlspecialchars($adminName),
+    $htmlTemplate
+);
+
+$htmlTemplate = str_replace(
+    "{SIDEBAR}",
+    $sidebarHtml,
+    $htmlTemplate
+);
+
+$htmlTemplate = str_replace(
+    "{{INQUIRIES_TABLE}}",
+    $tableRows,
+    $htmlTemplate
+);
+
+echo $htmlTemplate;
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class NotificationManager {
+class Notification {
     private $db;
 
     private $id;
@@ -12,6 +12,19 @@ class NotificationManager {
         $this->db = $db;
     }
 
+    /**
+     * دالة لإنشاء إشعار جديد في قاعدة البيانات
+     */
+    public function createNotification($userID, $title, $message, $source = 'system') {
+        try {
+            $sql = "INSERT INTO notifications (userID, title, message, source, created_at) VALUES (?, ?, ?, ?, NOW())";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$userID, $title, $message, $source]);
+        } catch (PDOException $e) {
+            error_log("خطأ في إنشاء الإشعار: " . $e->getMessage());
+            return false;
+        }
+    }
     
     // دالة لجلب إشعارات مستخدم معين
     public function getUserNotifications($userID) {

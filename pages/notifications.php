@@ -14,7 +14,7 @@ try {
 
     $parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "ولي الأمر";
 
-    $notifyManager = new NotificationManager($conn);
+    $notifyManager = new Notification($conn);
     $notifications = $notifyManager->getUserNotifications($_SESSION['userID']);
 
     $notifHtml = "";

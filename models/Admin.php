@@ -1,5 +1,5 @@
 <?php
-require_once 'user.php';
+require_once __DIR__ . '/user.php';
 require_once 'Announcement.php';
 
 class Admin extends User {
@@ -119,17 +119,17 @@ class Admin extends User {
     }
 
     // تحديث بيانات مستخدم
-    public function updateUser($id, $name, $userName, $role) {
+    public function updateUser($id, $name, $userName) {
         try {
-            $sql = "UPDATE users SET name = ?, userName = ?, role = ? WHERE userID = ?";
+            $sql = "UPDATE users SET name = ?, userName = ?
+             WHERE userID = ?";
             $stmt = $this->db->prepare($sql);
-            return $stmt->execute([$name, $userName, $role, (int)$id]);
+            return $stmt->execute([$name, $userName, (int)$id]);
         } catch (PDOException $e) {
             return false;
         }
     }
 
-    
     public function viewInquiries($inquiryId = null) {
     try {
         if ($inquiryId) { // جلب تفاصيل استفسار محدد مع رسائله (لشاشة الشات)
@@ -174,6 +174,19 @@ class Admin extends User {
 }
 
     
+    /**
+     * جلب كافة معرفات أولياء الأمور لإرسال الإشعارات الجماعية
+     */
+    public function getAllParentIDs() {
+        try {
+            $sql = "SELECT userID FROM users WHERE role = 'parent'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 
 
 

@@ -5,6 +5,10 @@
 session_start();
 require_once '../config/db_connect.php';
 require_once '../models/Admin.php';
+include 'includes/adminSidebar.php';
+
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
+
 
 // التحقق من الصلاحيات: يجب أن يكون المستخدم "admin"
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
@@ -57,10 +61,18 @@ if (isset($_SESSION['user_msg'])) {
     unset($_SESSION['user_msg']);
 }
 
-// ربط البيانات بالقالب
+
+
+ob_start();
+
+$sidebarHtml = ob_get_clean();
+
 $html_template = file_get_contents("../HTML/user.html");
+
+$html_template = str_replace("{SIDEBAR}", $sidebarHtml, $html_template);
 $html_template = str_replace("{{USERS_TABLE}}", $rows_html, $html_template);
 $html_template = str_replace("{{STATUS_MESSAGE}}", $status_msg, $html_template);
+$html_template = str_replace("{{ADMIN_NAME}}", htmlspecialchars($adminName), $html_template);
 
 echo $html_template;
 ?>

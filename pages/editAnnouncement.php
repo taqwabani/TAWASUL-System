@@ -7,6 +7,7 @@ session_start();
 require_once '../config/db_connect.php'; 
 require_once '../models/Admin.php';
 require_once '../models/Announcement.php';
+include 'includes/adminSidebar.php';
 
 //  [التحقق الأمني] التأكد من أن المستخدم مسجل دخول وصلاحيته "admin" لحماية الصفحة من الدخول غير المصرح به
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
@@ -84,10 +85,11 @@ if (isset($_SESSION['announcement_update_success'])) {
     unset($_SESSION['announcement_update_success']); // حذف الرسالة من السيسشن لكي لا تظهر مجدداً عند عمل Refresh للصفحة
 }
 
-//  فصل كود الـ PHP عن الـ HTML لزيادة وضوح الكود وسهولة الصيانة (Separation of Concerns)
-// قراءة ملف الـ HTML الخاص بالواجهة كملف نصي، ثم استبدال المتغيرات المحجوزة بالبيانات الفعلية
-$html_template = file_get_contents("../HTML/editAnnouncement.html");
+ob_start();
+$sidebarHtml = ob_get_clean();
 
+$html_template = file_get_contents("../HTML/editAnnouncement.html");
+$html_template = str_replace("{SIDEBAR}", $sidebarHtml, $html_template);
 $html_template = str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
 $html_template = str_replace("{{TITLE}}", htmlspecialchars($announcementData['title']), $html_template);
 $html_template = str_replace("{{CONTENT}}", htmlspecialchars($announcementData['content']), $html_template);

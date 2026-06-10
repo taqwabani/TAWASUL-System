@@ -10,24 +10,24 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
     
     <nav class="sidebar-nav">
-        <a href="dashboard.php" class="nav-item <?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
+        <a href="dashboardA.php" class="nav-item <?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
             <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon" alt="Dashboard"> 
             <span>الرئيسية</span>
         </a>
         
-        <a href="inquiries.php" class="nav-item <?php echo ($currentPage == 'inquiries.php') ? 'active' : ''; ?>">
+        <a href="adminAnnouncements.PHP" class="nav-item <?php echo ($currentPage == 'inquiries.php') ? 'active' : ''; ?>">
             <img src="../images/lucide-MessageSquare.svg" class="nav-icon" alt="Inquiries"> 
-            <span>الاستفسارات</span>
+            <span>ادارة الاعلانات</span>
         </a>
         
-        <a href="schedule.php" class="nav-item <?php echo ($currentPage == 'schedule.php') ? 'active' : ''; ?>">
+        <a href="user.PHP" class="nav-item <?php echo ($currentPage == 'schedule.php') ? 'active' : ''; ?>">
             <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedule"> 
-            <span>الجدول الدراسي</span>
+            <span>ادارة المستخدمين</span>
         </a>
         
-        <a href="notifications.php" class="nav-item <?php echo ($currentPage == 'notifications.php') ? 'active' : ''; ?>">
+        <a href="ViewAdminInquiries.php" class="nav-item <?php echo ($currentPage == 'notifications.php') ? 'active' : ''; ?>">
             <img src="../images/lucide-Bell.svg" class="nav-icon" alt="Notifications"> 
-            <span>الإشعارات</span>
+            <span>الردود والاستفسارات</span>
         </a>
         
         <a href="../logout.php" class="nav-item logout-link"onclick="return confirm('هل أنت متأكد من تسجيل الخروج؟');">

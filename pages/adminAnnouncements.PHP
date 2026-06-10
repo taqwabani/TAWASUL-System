@@ -5,6 +5,9 @@
 session_start();
 require_once '../config/db_connect.php';
 require_once '../models/Announcement.php';
+include 'includes/adminSidebar.php';
+
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
 // التحقق من الصلاحيات
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
@@ -22,7 +25,7 @@ $rows_html = "";
 
 if (count($announcements) > 0) {
     foreach ($announcements as $row) {
-        // التأكد من جلب المعرف الصحيح (حسب مسمى العمود في قاعدة بياناتك)
+        // التأكد من جلب المعرف الصحيح 
         $id = isset($row['announcementID']) ? $row['announcementID'] : (isset($row['announcementId']) ? $row['announcementId'] : 0);
         $title = htmlspecialchars($row['title']);
         // معالجة التاريخ بشكل مرن
@@ -49,11 +52,29 @@ if (count($announcements) > 0) {
 // قراءة القالب واستبدال المحتوى
 $html_template = file_get_contents("../HTML/adminAnnouncements.html");
 
-// استبدال جزء الـ tbody الثابت بالديناميكي
-// ملاحظة: قمت بتعديل القالب يدوياً هنا ليقبل الاستبدال
+
 $table_start = "<tbody>";
 $table_end = "</tbody>";
 $pattern = "~" . preg_quote($table_start, '~') . ".*?" . preg_quote($table_end, '~') . "~s";
 $html_template = preg_replace($pattern, $table_start . $rows_html . $table_end, $html_template);
+ob_start();
 
-echo $html_template;
+$sidebarHtml = ob_get_clean();
+
+$htmlTemplate = file_get_contents("../HTML/adminAnnouncements.html");
+
+$htmlTemplate = str_replace(
+    "{SIDEBAR}",
+    $sidebarHtml,
+    $htmlTemplate
+);
+    
+$htmlTemplate = str_replace(
+    "{{ADMIN_NAME}}",
+    htmlspecialchars($adminName),
+    $htmlTemplate
+);
+
+echo $htmlTemplate;
+?>
+   

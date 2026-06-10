@@ -11,36 +11,13 @@
 <body>
 
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon">
-                    <h2>TAWASUL</h2>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="../pages/dashboardA.php">
-                    <img src="../images/lucide-LayoutDashboard.svg" class="nav-icon"> الرئيسية
-                </a>
-                <a href="../pages/adminAnnouncements.PHP">
-                    <img src="../images/lucide-Megaphone.svg" class="nav-icon"> ادارة الاعلانات
-                </a>
-                <a href="../pages/user.PHP">
-                    <img src="../images/lucide-Users.svg" class="nav-icon"> ادارة المستخدمين
-                </a>
-                <a href="../pages/ViewAdminInquiries.php">
-                    <img src="../images/lucide-MessageSquare.svg" class="nav-icon"> ردود والاستفسارات</a>
-                <a href="notifications.html">
-                    <img src="../images/lucide-Bell.svg" class="nav-icon"> الإشعارات
-                </a>
-            </nav>
-        </aside>
+         {SIDEBAR}
 
         <div class="main-content">
             <header class="top-header">
                 <div class="page-title">الردود والاستفسارات</div>
                 <div class="user-info">
-                    <span>المدير : سالم</span>
+                    <span>المدير : {{ADMIN_NAME}}</span>
                 </div>
             </header>
             <div class="main-body">

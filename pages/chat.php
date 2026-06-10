@@ -1,10 +1,16 @@
 <?php
+
 /**
  * صفحة الخاصة بمنظق عمل الشات لرد ع الاستفسارات الخاصة بالادمن
  * 
  */
+session_start();
 require_once "../config/db_connect.php"; 
 require_once "../models/Inquiry.php"; //عدلت هني
+include 'includes/adminSidebar.php';
+
+
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
 $inquiryId = isset($_GET['id']) ? $_GET['id'] : null;
 if (!$inquiryId)
@@ -43,7 +49,8 @@ foreach ($chatMessages as $msg) {// المرور على جميع الرسائل 
     </div>";
 }
 
-
+ob_start();
+$sidebarHtml = ob_get_clean();
 $htmlFile = file_get_contents("../HTML/chat.html");
 
 // استبدال القيم داخل ملف HTML
@@ -52,6 +59,8 @@ $htmlFile = str_replace("{{subject}}", htmlspecialchars($inquiryInfo->subject), 
 $htmlFile = str_replace("{{date}}", date('Y/m/d', strtotime($inquiryInfo->created_at)), $htmlFile);
 $htmlFile = str_replace("{{chatContent}}", $messagesHTML, $htmlFile);
 $htmlFile = str_replace("{{inquiryID}}", $inquiryId, $htmlFile);
+$htmlFile = str_replace("{SIDEBAR}", $sidebarHtml, $htmlFile);
+$htmlFile = str_replace("{{ADMIN_NAME}}", htmlspecialchars($adminName), $htmlFile);
 
 echo $htmlFile;
 ?>

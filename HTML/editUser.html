@@ -10,24 +10,7 @@
 
 <body>
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="../images/BookOpen.svg" alt="Logo" class="logo-icon">
-                    <h2>TAWASUL</h2>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="../pages/dashboardA.php"><img src="../images/lucide-LayoutDashboard.svg" class="nav-icon">
-                    الرئيسية</a>
-                <a href="../pages/adminAnnouncements.PHP"><img src="../images/lucide-Megaphone.svg" class="nav-icon">
-                    ادارة الاعلانات</a>
-                <a href="../pages/u.PHP" class="active"><img src="../images/lucide-Users.svg" class="nav-icon"> ادارة
-                    المستخدمين</a>
-                <a href="../pages/ViewAdminInquiries.php"><img src="../images/lucide-MessageSquare.svg"
-                        class="nav-icon"> ردود والاستفسارات</a>
-            </nav>
-        </aside>
+                    {SIDEBAR}
 
         <div class="main-content">
             <header class="top-header">
@@ -54,14 +37,7 @@
                             <input type="text" name="userName" value="{{USERNAME}}" required>
                         </div>
 
-                        <div class="form-group">
-                            <label>الصلاحية</label>
-                            <select name="role"
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; font-family: inherit;">
-                                {{ROLE_OPTIONS}}
-                            </select>
-                        </div>
-
+                        
                         <button type="submit" class="btn-primary">حفظ التغييرات</button>
                         <a href="u.PHP" style="margin-right: 15px; color: #666; text-decoration: none;">رجوع للكل</a>
                     </form>

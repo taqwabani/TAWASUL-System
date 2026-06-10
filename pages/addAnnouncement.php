@@ -6,6 +6,11 @@ session_start();
 require_once '../config/db_connect.php'; 
 require_once '../models/Admin.php';
 require_once '../models/Announcement.php';
+require_once '../models/Notification.php';
+include 'includes/adminSidebar.php';
+
+
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //استقبال البيانات النصية من النموذج (العنوان والمحتوى)
@@ -53,6 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newAnnouncement = new Announcement($announcementTitle, $announcementContent, $imagePath);
     // تنفيذ عملية الإضافة في قاعدة البيانات والتحقق من نجاحها
     if ($currentAdmin->addAnnouncement($newAnnouncement)) {
+          try {
+            $notifyManager = new NotificationManager($conn);
+            $parentIDs = $currentAdmin->getAllParentIDs();
+            foreach ($parentIDs as $parentID) {
+                $notifyManager->createNotification($parentID, "إعلان جديد", "تم نشر إعلان جديد من إدارة المدرسة", "admin");
+            }
+        } catch (Exception $e) {
+            error_log("خطأ في إرسال إشعارات الإعلان: " . $e->getMessage());
+        }
+
         $_SESSION['announcement_success'] = true; // تخزين حالة النجاح في الجلسة
         header("Location: addAnnouncement.php"); // العودة لصفحة 
         exit();
@@ -71,6 +86,35 @@ if (isset($_SESSION['announcement_success'])) {
 }
 
 // قراءة القالب واستبدال العلامة المحجوزة
+ob_start();
+$sidebarHtml = ob_get_clean();
+
 $html_template = file_get_contents("../HTML/addAnnouncement.html");
-echo str_replace("{{SUCCESS_MESSAGE}}", $success_msg, $html_template);
+
+$html_template = str_replace(
+    "{{ADMIN_NAME}}",
+    htmlspecialchars($adminName),
+    $html_template
+);
+
+$html_template = str_replace(
+    "{SIDEBAR}",
+    $sidebarHtml,
+    $html_template
+);
+
+$html_template = str_replace(
+    "{{SUCCESS_MESSAGE}}",
+    $success_msg,
+    $html_template
+);
+
+$html_template = str_replace(
+    "{{ADMIN_NAME}}",
+    htmlspecialchars($adminName),
+    $html_template
+);
+
+echo $html_template;
+
 ?>
