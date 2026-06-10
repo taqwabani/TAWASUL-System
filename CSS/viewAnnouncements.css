@@ -154,3 +154,35 @@
         text-align: center; 
     }
 }
+.search-container{
+    margin:20px 0;
+}
+
+.search-form{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+}
+
+.search-input{
+    flex:1;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.search-btn{
+    background:#012955;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.search-btn:hover{
+    background:#014080;
+}

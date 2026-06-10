@@ -71,6 +71,26 @@ class Announcement {
             return [];
         }
     }
+    public static function searchAnnouncements($conn, $keyword)
+{
+    $sql = "
+        SELECT *
+        FROM announcements
+        WHERE title LIKE ?
+        OR content LIKE ?
+        ORDER BY createdAt DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+
+    $searchTerm = "%" . $keyword . "%";
+
+    $stmt->execute([$searchTerm, $searchTerm]);
+
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
 }
 
 ?>

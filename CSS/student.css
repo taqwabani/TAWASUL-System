@@ -1,0 +1,52 @@
+/* عنوان الصفحة */
+.students-title {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* حاوية البطاقات */
+.students-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* بطاقة الطالب */
+.student-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    border-right: 5px solid #012955;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* اسم الطالب */
+.student-card h3 {
+    margin: 0 0 12px 0;
+    color: #012955;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* الصف */
+.student-card p {
+    margin: 0;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.student-card p span {
+    color: #012955;
+    font-weight: bold;
+}

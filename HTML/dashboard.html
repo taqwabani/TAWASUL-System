@@ -13,7 +13,6 @@
     <div class="main-wrapper">
         
                   {SIDEBAR}
-
         <div class="main-content">
             <header class="top-header">
                 <div class="page-title">لوحة التحكم الرئيسية</div>
@@ -26,15 +25,20 @@
                 <div class="dashboard-header">
                     <p>تابع آخر الأخبار، الإعلانات، والتعميمات الرسمية الصادرة من إدارة المدرسة.</p>
                 </div>
+                <div class="search-container">
+                   <form method="POST" action="" class="search-form">
 
+                     <input type="text" name="search" class="search-input" placeholder="ابحث عن إعلان أو خبر..."value="{{SEARCH_VALUE}}">
+                     <button type="submit" class="search-btn"> بحث </button>
+                    </form>
+                </div>
                 <div class="announcements-section">
                     <div class="section-subtitle">آخر المستجدات والإعلانات</div>
 
                     {{ANNOUNCEMENTS_LIST}}
 
                     <div class="view">
-                        <a href="../HTML/viewAllAnnouncements.html" class="btn-view-all">عرض كافة الإعلانات السابقة
-                            ←</a>
+                        <a href="../HTML/archives.html" class="btn-view-all">عرض كافة الإعلانات السابقة ←</a>
                     </div>
 
                 </div>

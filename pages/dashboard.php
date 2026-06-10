@@ -16,9 +16,20 @@ $conn = $database->getConnection();
 // جلب اسم ولي الأمر المخزن في السيسشن أثناء عملية تسجيل الدخول بنجاح
 $parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "زائر";
 
-$anno = new Announcement();
-$announcementsFromDB = $anno->getLatestAnnouncements($conn, 5); // جلب آخر 5 مستجدات
 
+
+$search = isset($_POST['search'])
+    ? trim($_POST['search'])
+    : '';
+if (!empty($search)) {
+
+    $announcementsFromDB =
+        Announcement::searchAnnouncements($conn,$search);
+} else {
+
+    $anno = new Announcement();
+    $announcementsFromDB =$anno->getLatestAnnouncements($conn,5);
+}
 $announcementsHtml = "";
 
 if (!empty($announcementsFromDB)) {
@@ -61,5 +72,5 @@ $mainHtmlTemplate = file_get_contents("../HTML/dashboard.html");
 $finalPageContent = str_replace('{SIDEBAR}', $sidebarHtml, $mainHtmlTemplate);
 $finalPageContent = str_replace('{{PARENT_NAME}}', htmlspecialchars($parentName), $finalPageContent);
 $finalPageContent = str_replace('{{ANNOUNCEMENTS_LIST}}', $announcementsHtml, $finalPageContent);
-
+$finalPageContent = str_replace( '{{SEARCH_VALUE}}', htmlspecialchars($search), $finalPageContent);
 echo $finalPageContent;

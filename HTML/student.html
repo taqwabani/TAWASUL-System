@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الابناء</title>
+            <link rel="stylesheet" href="../CSS/inquiries.css">
+            <link rel="stylesheet" href="../CSS/viewAnnouncements.css"> 
+            <link rel="stylesheet" href="../CSS/student.css">   
+</head>
+<body>
+    <div class="main-wrapper">
+        
+                  {SIDEBAR}
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">لوحة التحكم الرئيسية</div>
+                <div class="user-info">
+                    <span>ولي الأمر: {{PARENT_NAME}}</span>
+                </div>
+            </header>
+
+       <div class="content-body">
+         <h2 class="students-title">  ابنائي</h2>
+        <div class="students-container">
+
+        {{STUDENTS_LIST}}
+        </div>
+      </div>
+
+</body>
+</html>

@@ -19,6 +19,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img src="../images/lucide-MessageSquare.svg" class="nav-icon" alt="Inquiries"> 
             <span>الاستفسارات</span>
         </a>
+        <a href="student.php" class="nav-item <?php echo ($currentPage == 'student.php') ? 'active' : ''; ?>">
+        <img src="../images/lucide-Users.svg" class="nav-icon" alt="Students">
+           <span>الأبناء</span>
+        </a>
         
         <a href="schedule.php" class="nav-item <?php echo ($currentPage == 'schedule.php') ? 'active' : ''; ?>">
             <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedule"> 
