@@ -11,12 +11,15 @@ $conn = $database->getConnection();
 $parentID = $_SESSION['userID'];
 $parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "زائر";
 
-$students =Student::getStudentsByParent( $conn, $parentID);
+$studentModel = new Student($conn);
+
+$students = $studentModel->getStudentsByParent($parentID);
+
 
 $studentsHtml = "";
-foreach($students as $student){
+foreach ($students as $student) {
 
-$studentsHtml .= "
+    $studentsHtml .= "
 
 
 <div class='student-card'>
@@ -41,7 +44,7 @@ include 'includes/sidebar.php';
 $sidebarHtml = ob_get_clean();
 
 $htmlTemplate =
-file_get_contents("../HTML/student.html");
+    file_get_contents("../HTML/student.html");
 
 $htmlTemplate = str_replace(
     "{{STUDENTS_LIST}}",
@@ -54,13 +57,6 @@ $htmlTemplate = str_replace(
     $sidebarHtml,
     $htmlTemplate
 );
-$htmlTemplate = str_replace(
-    "{{PARENT_NAME}}",
-    htmlspecialchars($parentName),
-    $htmlTemplate
-);
+$htmlTemplate = str_replace("{{PARENT_NAME}}",htmlspecialchars($parentName),$htmlTemplate);
 
 echo $htmlTemplate;
-
-
-?>

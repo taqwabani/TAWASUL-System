@@ -1,18 +1,26 @@
 <?php
 
-class Student {
+class Student
+{
+    private $conn;
 
     private $studentID;
     private $studentName;
     private $classID;
     private $parentID;
 
-    public static function getStudentsByParent($conn,$parentID)
+    public function __construct($conn)
+    {
+        $this->conn = $conn;
+    }
+
+    public function getStudentsByParent($parentID)
     {
         $sql = "
         SELECT
             students.studentID,
             students.studentName,
+            students.classID,
             classes.className
         FROM students
         JOIN classes
@@ -20,7 +28,7 @@ class Student {
         WHERE parentID = ?
         ";
 
-        $stmt = $conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
 
         $stmt->execute([$parentID]);
 

@@ -19,32 +19,24 @@
                 الجدول الدراسي
             </div>
             <div class="user-info">
-                <span>ولي الأمر: محمد علي</span>
+                <span>ولي الأمر: {{PARENT_NAME}}</span>
             </div>
         </header>
         <main class="content-body">
             <div class="schedule-header">
 
                 <h2>جدول الحصص الدراسية</h2>
-                <form class="student-selector">
+                <form method="GET" class="student-selector">
                     <label>اختر الابن:</label>
-                    <select>
-                        <option>أحمد علي محمد</option>
-                        <option>سارة علي محمد</option>
+                    <select name="studentID" onchange="this.form.submit()">
+                       {{STUDENT_OPTIONS}}
                     </select>
                 </form>
             </div>
             <div class="periods-card">
                 <h3>مواعيد الحصص</h3>
                 <div class="periods-grid">
-
-                    <div>الأولى<br>08:00 - 08:45</div>
-                    <div>الثانية<br>08:45 - 09:30</div>
-                    <div>الثالثة<br>09:30 - 10:15</div>
-                    <div>الرابعة<br>10:30 - 11:15</div>
-                    <div>الخامسة<br>11:15 - 12:00</div>
-                    <div>السادسة<br>12:00 - 12:45</div>
-                    <div>السابعة<br>12:45 - 01:30</div>
+                     {{PERIODS_TIMES}}
 
                 </div>
 
@@ -67,38 +59,8 @@
 
                     <tbody>
 
-                        <tr>
-                            <td>الأحد</td>
-                            <td>رياضيات</td>
-                            <td>علوم</td>
-                            <td>لغة عربية</td>
-                            <td>حاسوب</td>
-                            <td>إنجليزي</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>الإثنين</td>
-                            <td>رياضيات</td>
-                            <td>علوم</td>
-                            <td>دين</td>
-                            <td>إنجليزي</td>
-                            <td>حاسوب</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>الثلاثاء</td>
-                            <td colspan="7">علوم</td>
-                        </tr>
-                        <tr>
-                            <td>الأربعاء</td>
-                            <td colspan="7">دين</td>
-                        </tr>
-                        <tr>
-                            <td>الخميس</td>
-                            <td colspan="7">انجليزي</td>
-                        </tr>
+                        {{SCHEDULE_ROWS}}
+
                     </tbody>
                 </table>
             </div>
