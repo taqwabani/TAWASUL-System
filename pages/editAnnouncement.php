@@ -24,6 +24,9 @@ $announcementData = Announcement::getById($conn, $announcementID);
 // التحقق من أن الإعلان موجود فعلياً في قاعدة البيانات لمنع أخطاء النظام 
 if (!$announcementData) {
     die("الإعلان المطلوب غير موجود.");
+    $_SESSION['msg'] = "الإعلان المطلوب غير موجود.";
+    header("Location: adminAnnouncements.php"); // إعادة التوجيه لصفحة الإعلانات
+    exit();
 }
 
 //  معالجة البيانات القادمة من الفورم عند الضغط على زر الحفظ (POST )

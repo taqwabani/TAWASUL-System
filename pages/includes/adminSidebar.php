@@ -29,7 +29,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img src="../images/lucide-Bell.svg" class="nav-icon" alt="Notifications"> 
             <span>الردود والاستفسارات</span>
         </a>
-        
+            <a href="AdminSchedules.php" class="nav-item <?php echo ($currentPage == 'AdminSchedules.php') ? 'active' : ''; ?>">
+            <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedules"> 
+            <span>ادارة الجداول </span>
+        </a>
         <a href="../logout.php" class="nav-item logout-link"onclick="return confirm('هل أنت متأكد من تسجيل الخروج؟');">
             
             <img src="../images/material-Login.svg" alt="Logout Icon" class="nav-icon">

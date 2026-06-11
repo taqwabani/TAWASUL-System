@@ -47,7 +47,7 @@ class Announcement {
      */
     public static function getById($db, $id) {
         try {
-            $sql = "SELECT * FROM announcements WHERE announcementID = ?";
+            $sql = "SELECT * FROM announcements WHERE announcementId  = ?";
             $stmt = $db->prepare($sql);
             $stmt->execute([(int)$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
