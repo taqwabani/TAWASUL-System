@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>الجدول الدراسي - TAWASUL</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/schedules.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {SIDEBAR}
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">الجدول الدراسي الأسبوعي</div>
+                <div class="user-info">
+                    <span>أهلاً بك، {{PARENT_NAME}}</span>
+                </div>
+            </header>
+
+            <div class="schedule-container">
+                <div class="schedule-grid">
+                    {{SCHEDULES_TABLE}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
