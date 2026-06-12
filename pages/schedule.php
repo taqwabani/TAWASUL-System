@@ -10,7 +10,6 @@ if (!isset($_SESSION['userID'])) {
 
 $conn = Database::getInstance()->getConnection();
 $scheduleModel = new Schedule($conn);
-
 // جلب كافة الحصص مرتبة حسب الصف واليوم
 $schedules = $scheduleModel->getAllSchedulesWithClassName();
 
@@ -35,7 +34,7 @@ if (!empty($grid)) {
         }
         $rows_html .= "</tr></thead><tbody>";
 
-        for ($p = 1; $p <= 8; $p++) { // عرض 8 حصص
+        for ($p = 1; $p <= 7; $p++) { // عرض 7 حصص أساسية
             $rows_html .= "<tr>";
             $rows_html .= "<td style='font-weight: bold;'>$p</td>";
             foreach ($days as $day) {
@@ -64,6 +63,6 @@ if (file_exists("../HTML/schedule.html")) {
     $template = str_replace("{{PARENT_NAME}}", htmlspecialchars($parentName), $template);
     echo $template;
 } else {
-    die("خطأ: ملف القالب schedule.html غير موجود.");
+    echo "<h2>الجداول الدراسية</h2><table border='1'>$rows_html</table>";
 }
 ?>

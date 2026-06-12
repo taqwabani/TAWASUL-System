@@ -17,57 +17,25 @@
                 <div class="page-title">إدارة الجدول الدراسي</div>
             </header>
 
+            <div class="schedule-times-card">
+                <div class="card-header">مواعيد الحصص</div>
+                <div class="periods-container">{{PERIODS_LIST}}</div>
+            </div>
             <div class="announcement-container">
                 <div class="page-header">
                     <div class="header-text">
-                        <h2>إضافة حصة جديدة</h2>
-                        <p>قم بتعبئة المادة واليوم ورقم الحصة لكل صف دراسي</p>
+                        <h2>السنوات الدراسية </h2>
+                        <div class="class-buttons-container">{{CLASS_BUTTONS_PLACEHOLDER}}</div>
+                    </div>
+                    <div>
+
                     </div>
                 </div>
 
-                <div class="status-msg">{{MSG}}</div>
 
-                <form method="POST" class="schedule-form">
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>الصف الدراسي</label>
-                            <select name="classID" required>{{CLASS_OPTIONS}}</select>
-                        </div>
-                        <div class="input-group">
-                            <label>اليوم</label>
-                            <select name="dayName" required>
-                                <option value="الأحد">الأحد</option>
-                                <option value="الإثنين">الإثنين</option>
-                                <option value="الثلاثاء">الثلاثاء</option>
-                                <option value="الأربعاء">الأربعاء</option>
-                                <option value="الخميس">الخميس</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>رقم الحصة</label>
-                            <input type="number" name="periodNumber" min="1" max="8" required>
-                        </div>
-                        <div class="input-group">
-                            <label>اسم المادة</label>
-                            <input type="text" name="subjectName" placeholder="مثال: رياضيات" required>
-                        </div>
-                    </div>
-                    <button type="submit" name="add_period" class="btn-primary-dark">إضافة للحصة</button>
-                </form>
-
-                <div class="table-responsive">
-                    <table class="announcement-table">
-                        <thead>
-                            <tr>
-                                <th>الصف</th>
-                                <th>اليوم</th>
-                                <th>الحصة</th>
-                                <th>المادة</th>
-                                <th>إجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody>{{SCHEDULES_TABLE}}</tbody>
-                    </table>
+                <!-- جدول عرض الحصص المضافة -->
+                <div id="schedules-display-area" class="table-responsive">
+                    {{SCHEDULES_TABLE}}
                 </div>
             </div>
         </div>

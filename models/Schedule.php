@@ -17,9 +17,7 @@ class Schedule {
             $sql = "INSERT INTO schedules (classID, dayName, periodNumber, subjectName) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
             return $stmt->execute([
-                (int)$classID, 
-                $dayName, 
-                (int)$periodNumber, 
+                $classID,  $dayName, $periodNumber, 
                 $subjectName
             ]);
         } catch (PDOException $e) {
@@ -27,7 +25,17 @@ class Schedule {
             return false;
         }
     }
-
+    public  function getTimes(){
+        try{
+            $sql="SELECT * FROM  periods" ;
+            $stmt=$this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            error_log("خطأ في جلب مواعيد الحصص: " . $e->getMessage());
+             return [];
+}
+    }
     /**
      * جلب الجدول الدراسي الأسبوعي الكامل لصف معين مرتدياً أسماء الأيام والحصص
      */
@@ -66,6 +74,20 @@ class Schedule {
     }
 
     /**
+     * تحديث مادة حصة معينة
+     */
+    public function updateSchedule($id, $subjectName) {
+        try {
+            $sql = "UPDATE schedules SET subjectName = ? WHERE scheduleID = ?";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$subjectName, (int)$id]);
+        } catch (PDOException $e) {
+            error_log("خطأ في تحديث الحصة: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * حذف حصة معينة من الجدول بواسطة الـ ID الخاص بها
      */
     public function deleteSchedule($id) {
@@ -82,10 +104,10 @@ class Schedule {
     /**
      * جلب تفاصيل حصة معينة بواسطة المعرف (تستخدم عند الحاجة للتعديل أو التحقق)
      */
-    public static function getById($db, $id) {
+    public  function getById($id) {
         try {
             $sql = "SELECT * FROM schedules WHERE scheduleID = ?";
-            $stmt = $db->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             $stmt->execute([(int)$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -93,5 +115,17 @@ class Schedule {
             return null;
         }
     }
+
+   public function getAllClassNames() {
+    try {
+        $sql = "SELECT classID, className FROM classes ORDER BY className ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("خطأ في جلب أسماء الصفوف: " . $e->getMessage());
+        return [];
+            }
+}
 }
 ?>
