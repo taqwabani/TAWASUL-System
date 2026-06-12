@@ -17,6 +17,8 @@ $adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 $conn = Database::getInstance()->getConnection();
 $scheduleModel = new Schedule($conn);
 
+$days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+
 // 1. معالجة حفظ البيانات عند الضغط على زر "حفظ التعديلات"
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_schedule'])) {
     $cID = (int)$_POST['classID'];
@@ -24,13 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_schedule'])) {
     $lookup = [];
     foreach($currentData as $row) $lookup[$row['dayName']][$row['periodNumber']] = $row['scheduleID'];
 
-    foreach ($_POST['subjects'] as $day => $periodsData) {
+    foreach ($_POST['subjects'] as $dayIdx => $periodsData) {
+        $dayName = $days[$dayIdx]; // تحويل الفهرس إلى اسم اليوم الصحيح من المصفوفة
         foreach ($periodsData as $pNum => $subject) {
             $subject = trim($subject);
-            if (isset($lookup[$day][$pNum])) {
-                $scheduleModel->updateSchedule($lookup[$day][$pNum], $subject);
+            if (isset($lookup[$dayName][$pNum])) {
+                $scheduleModel->updateSchedule($lookup[$dayName][$pNum], $subject);
             } elseif ($subject !== "") {
-                $scheduleModel->addSchedule($cID, $day, $pNum, $subject);
+                $scheduleModel->addSchedule($cID, $dayName, $pNum, $subject);
             }
         }
     }
@@ -49,12 +52,24 @@ foreach ($classnames as $c) {
 }
 
 $periods = $scheduleModel->getTimes();
-$days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
 
 $scheduleData = [];
 if ($selectedClassID) {
     $raw = $scheduleModel->getWeeklyScheduleByClass($selectedClassID);
-    foreach($raw as $r) $scheduleData[$r['dayName']][$r['periodNumber']] = $r['subjectName'];
+    foreach($raw as $r) {
+        // تنظيف اسم اليوم من المسافات لضمان المطابقة
+        $dName = trim($r['dayName']);
+        
+        // معالجة ذكية: إذا كان الاسم في الداتا بيز بدون همزة والكود به همزة، نقوم بمطابقتها
+        foreach($days as $standardDay) {
+            $normStandard = str_replace(['أ','إ','آ'], 'ا', $standardDay);
+            $normDB = str_replace(['أ','إ','آ'], 'ا', $dName);
+            if($normStandard === $normDB) {
+                $scheduleData[$standardDay][$r['periodNumber']] = $r['subjectName'];
+                break;
+            }
+        }
+    }
 }
 
 // بناء كود مواعيد الحصص (Periods HTML)
@@ -78,12 +93,12 @@ if ($selectedClassID) {
     foreach ($periods as $p) $tables_html .= "<th>الحصة {$p['periodNumber']}</th>";
     $tables_html .= "</tr></thead><tbody>";
 
-    foreach ($days as $day) {
+    foreach ($days as $index => $day) {
         $tables_html .= "<tr><td class='day-column'>$day</td>";
         foreach ($periods as $p) {
             $pNum = $p['periodNumber'];
             $val = $scheduleData[$day][$pNum] ?? "";
-            $tables_html .= "<td><input type='text' name='subjects[$day][$pNum]' value='" . htmlspecialchars($val) . "' class='table-input' placeholder='-'></td>";
+            $tables_html .= "<td><input type='text' name='subjects[$index][$pNum]' value='" . htmlspecialchars($val) . "' class='table-input' placeholder='-'></td>";
         }
         $tables_html .= "</tr>";
     }

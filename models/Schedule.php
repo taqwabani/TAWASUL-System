@@ -27,7 +27,7 @@ class Schedule {
     }
     public  function getTimes(){
         try{
-            $sql="SELECT * FROM  periods" ;
+            $sql="SELECT * FROM  periods ORDER BY periodNumber ASC" ;
             $stmt=$this->db->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -118,7 +118,7 @@ class Schedule {
 
    public function getAllClassNames() {
     try {
-        $sql = "SELECT classID, className FROM classes ORDER BY className ASC";
+        $sql = "SELECT classID, className FROM classes ORDER BY classID ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
