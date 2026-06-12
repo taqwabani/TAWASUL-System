@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 try {
                     $inquiryData = $inquiryObj->viewInquiries($inquiryID);
                     if ($inquiryData && isset($inquiryData['details'])) {
-                        $notifyManager = new Notification($conn);
+                            $notifyManager = new Notification($conn);
                         $notifyManager->createNotification($inquiryData['details']->parentID, "رد على استفسار", "تم الرد على استفسارك", "admin");
                     }
                 } catch (Exception $e) {

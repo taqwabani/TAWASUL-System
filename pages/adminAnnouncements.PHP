@@ -5,7 +5,6 @@
 session_start();
 require_once '../config/db_connect.php';
 require_once '../models/Announcement.php';
-include 'includes/adminSidebar.php';
 
 $adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
@@ -49,32 +48,33 @@ if (count($announcements) > 0) {
     $rows_html = "<tr><td colspan='5' style='text-align:center;'>لا توجد إعلانات حالياً</td></tr>";
 }
 
-// قراءة القالب واستبدال المحتوى
+// التقاط مخرجات القائمة الجانبية بشكل صحيح
+ob_start();
+include 'includes/adminSidebar.php';
+$sidebarHtml = ob_get_clean();
+
+// قراءة القالب مرة واحدة فقط
 $html_template = file_get_contents("../HTML/adminAnnouncements.html");
 
-
+// استبدال الجدول باستخدام regex (كما في منطقك السابق) أو باستخدام علامة محجوزة إذا كانت موجودة
 $table_start = "<tbody>";
 $table_end = "</tbody>";
 $pattern = "~" . preg_quote($table_start, '~') . ".*?" . preg_quote($table_end, '~') . "~s";
 $html_template = preg_replace($pattern, $table_start . $rows_html . $table_end, $html_template);
-ob_start();
 
-$sidebarHtml = ob_get_clean();
-
-$htmlTemplate = file_get_contents("../HTML/adminAnnouncements.html");
-
-$htmlTemplate = str_replace(
+// استبدال بقية القيم في نفس المتغير
+$html_template = str_replace(
     "{SIDEBAR}",
     $sidebarHtml,
-    $htmlTemplate
-);
-    
-$htmlTemplate = str_replace(
-    "{{ADMIN_NAME}}",
-    htmlspecialchars($adminName),
-    $htmlTemplate
+    $html_template
 );
 
-echo $htmlTemplate;
+$html_template = str_replace(
+    "{{ADMIN_NAME}}",
+    htmlspecialchars($adminName),
+    $html_template
+);
+
+echo $html_template;
 ?>
    

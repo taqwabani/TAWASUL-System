@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إدارة الجداول الدراسية - TAWASUL</title>
+    <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/adminAnnouncements.css">
+    <link rel="stylesheet" href="../CSS/schedules.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {SIDEBAR}
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">إدارة الجدول الدراسي</div>
+            </header>
+
+            <div class="schedule-times-card">
+                <div class="card-header">مواعيد الحصص</div>
+                <div class="periods-container">{{PERIODS_LIST}}</div>
+            </div>
+            <div class="announcement-container">
+                <div class="page-header">
+                    <div class="header-text">
+                        <h2>السنوات الدراسية </h2>
+                        <div class="class-buttons-container">{{CLASS_BUTTONS_PLACEHOLDER}}</div>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+
+
+                <!-- جدول عرض الحصص المضافة -->
+                <div id="schedules-display-area" class="table-responsive">
+                    {{SCHEDULES_TABLE}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

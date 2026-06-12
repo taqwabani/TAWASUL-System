@@ -6,17 +6,16 @@ session_start();
 require_once '../config/db_connect.php';
 require_once '../models/Admin.php';
 include 'includes/adminSidebar.php';
+require_once "../models/UserFactory.php";
 
-$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "المدير";
 
-
+$adminName = isset($_SESSION['name']) ? $_SESSION['name'] : "admin ";
 // التحقق من الصلاحيات: يجب أن يكون المستخدم "admin"
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
 $conn = Database::getInstance()->getConnection(); // جلب اتصال قاعدة البيانات من كلاس Database (Singleton)
-
 $admin = new Admin($conn);
 $admin->setUserId($_SESSION['userID']);
 
@@ -45,7 +44,7 @@ foreach ($users as $user) {
         <td>" . $roleText . "</td>
         <td class='actions'>
             <a href='editUser.php?id={$user->userID}' class='action-link edit' style='margin-left:10px; color:#001f3f; text-decoration:none;'>تعديل</a>
-            <a href='u.PHP?delete_id={$user->userID}' class='action-link delete' onclick='return confirm(\"هل أنت متأكد من حذف هذا المستخدم؟ سيؤدي ذلك لحذف كافة بياناته المرتبطة.\")' style='color:red;'>حذف</a>
+            <a href='user.PHP?delete_id={$user->userID}' class='action-link delete' onclick='return confirm(\"هل أنت متأكد من حذف هذا المستخدم؟ سيؤدي ذلك لحذف كافة بياناته المرتبطة.\")' style='color:red;'>حذف</a>
         </td>
     </tr>";
 }

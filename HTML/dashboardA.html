@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>ادارة النظام- TAWASUL</title>
     <link rel="stylesheet" href="../CSS/inquiries.css">
+    <link rel="stylesheet" href="../CSS/viewAnnouncements.css">
 </head>
 
 <body>
@@ -18,6 +19,16 @@
                     <span>المدير : {{ADMIN_NAME}}</span>
                 </div>
             </header>
+                      <main class="content-body">
+                <div class="dashboard-header">
+                </div>
+                <div class="announcements-section">
+                    <div class="section-subtitle">الإعلانات</div>
+                    {{ANNOUNCEMENTS_LIST}}              
+                  </div>
+            </main>
+        </div>
+    </div>
         </div>
     </div>
 </body>

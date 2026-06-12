@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // تنفيذ عملية الإضافة في قاعدة البيانات والتحقق من نجاحها
     if ($currentAdmin->addAnnouncement($newAnnouncement)) {
           try {
-            $notifyManager = new NotificationManager($conn);
+            $notifyManager = new Notification($conn);
             $parentIDs = $currentAdmin->getAllParentIDs();
             foreach ($parentIDs as $parentID) {
                 $notifyManager->createNotification($parentID, "إعلان جديد", "تم نشر إعلان جديد من إدارة المدرسة", "admin");
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $_SESSION['announcement_success'] = true; // تخزين حالة النجاح في الجلسة
-        header("Location: addAnnouncement.php"); // العودة لصفحة 
+        header("Location: adminAnnouncements.php"); // العودة لصفحة 
         exit();
     } else {
         // إظهار رسالة خطأ في حال فشل الاستعلام في قاعدة البيانات
