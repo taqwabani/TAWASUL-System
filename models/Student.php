@@ -3,7 +3,6 @@
 class Student
 {
     private $conn;
-
     private $studentID;
     private $studentName;
     private $classID;
@@ -34,4 +33,15 @@ class Student
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function getallstudents()
+    {
+        $sql = "SELECT s.studentName, c.className, u.name as userName 
+                FROM students s 
+                JOIN classes c ON s.classID = c.classID 
+                JOIN users u ON s.parentID = u.userID";       
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }    
 }
+?>

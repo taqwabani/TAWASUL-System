@@ -106,6 +106,17 @@ class Admin extends User {
         }
     }
 
+    // إضافة طالب جديد للنظام
+    public function addStudent($name, $classID, $parentID) {
+        try {
+            $sql = "INSERT INTO students (studentName, classID, parentID) VALUES (?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$name, $classID, $parentID]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     // جلب بيانات مستخدم معين بواسطة المعرف
     public function getUserById($id) {
         try {

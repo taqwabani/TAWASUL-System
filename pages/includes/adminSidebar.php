@@ -33,6 +33,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedules"> 
             <span>ادارة الجداول الدراسية </span>
         </a>
+            <a href="viewstudent.php" class="nav-item <?php echo ($currentPage == 'students.php') ? 'active' : ''; ?>">
+            <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedules"> 
+            <span> الطلاب   </span>
+        </a>
         <a href="../logout.php" class="nav-item logout-link"onclick="return confirm('هل أنت متأكد من تسجيل الخروج؟');">
             
             <img src="../images/material-Login.svg" alt="Logout Icon" class="nav-icon">
@@ -40,5 +44,4 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </a>
 
     </nav>
-     
 </aside>
