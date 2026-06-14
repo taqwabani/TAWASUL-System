@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة طالب جديد</title>
+    <link rel="stylesheet" href="../CSS/dashboardA.css">
+    <link rel="stylesheet" href="../CSS/addStudent.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {SIDEBAR}
+        <div class="main-content">
+            <header class="top-header">
+                <div class="page-title">إضافة طالب جديد</div>
+                <div class="user-info">
+                    <span>المدير: {{ADMIN_NAME}}</span>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="content-card">
+                    <h2>بيانات الطالب الجديد</h2>
+                    {{MESSAGE}}
+
+                    <form action="addStudent.php" method="POST" class="form-style">
+                        <div class="form-group">
+                            <label>اسم الطالب:</label>
+                            <input type="text" name="studentName" required placeholder="أدخل اسم الطالب الكامل">
+                        </div>
+
+                        <div class="form-group">
+                            <label>الصف الدراسي:</label>
+                            <select name="classID" required>
+                                <option value="">اختر الصف...</option>
+                                {{CLASS_OPTIONS}}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ولي الأمر:</label>
+                            <select name="parentID" required>
+                                <option value="">اختر ولي الأمر...</option>
+                                {{PARENT_OPTIONS}}
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-save">حفظ البيانات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
