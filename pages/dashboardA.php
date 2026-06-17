@@ -10,27 +10,41 @@ ob_start();
 include 'includes/adminSidebar.php';
 $sidebarHtml = ob_get_clean();
 $anno = new Announcement();
-$announcementsFromDB = $anno->getAllAnnouncements($conn); // جلب كافة الإعلانات المنشورة من قبل الإدارة
+$search = isset($_POST['search'])
+    ? trim($_POST['search'])
+    : '';
+if (!empty($search)) {
+
+    $announcementsFromDB =
+        Announcement::searchAnnouncements($conn,$search);
+} else {
+
+    $anno = new Announcement();
+    $announcementsFromDB =$anno->getLatestAnnouncements($conn,5);
+}
 $announcementsHtml = "";
+
 if (!empty($announcementsFromDB)) {
     foreach ($announcementsFromDB as $ann) {
-        $formattedDate = date("Y-m-d", strtotime($ann['createdAt']));
+        $formattedDate = date("Y-m-d", strtotime($ann->createdAt));
+        
         $imageHtml = "";
-        if (!empty($ann['imagePath'])) {
+        if (!empty($ann->imagePath)) {
             $imageHtml = "
             <div class='announcement-image-wrapper'>
-                <img src='../" . htmlspecialchars($ann['imagePath']) . "' alt='مرفق الإعلان' class='announcement-img'>
+                <img src='../" . htmlspecialchars($ann->imagePath) . "' alt='مرفق الإعلان' class='announcement-img'>
             </div>";
         }
+
         $announcementsHtml .= "
         <div class='announcement-dashboard-card'>
             <div class='announcement-card-content'>
                 <div class='announcement-card-header'>
-                    <h4 class='announcement-card-title'>" . htmlspecialchars($ann['title']) . "</h4>
+                    <h4 class='announcement-card-title'>" . htmlspecialchars($ann->title) . "</h4>
                     <span class='announcement-card-date'>{$formattedDate}</span>
                 </div>
                 <div class='announcement-card-body'>
-                    " . nl2br(htmlspecialchars($ann['content'])) . "
+                    " . nl2br(htmlspecialchars($ann->content)) . "
                 </div>
             </div>
             {$imageHtml}
@@ -45,6 +59,8 @@ $htmlTemplate = file_get_contents("../HTML/dashboardA.html");
 $htmlTemplate = str_replace("{SIDEBAR}", $sidebarHtml,$htmlTemplate);
 $htmlTemplate = str_replace("{{ADMIN_NAME}}",  htmlspecialchars($adminName),$htmlTemplate);
 $htmlTemplate = str_replace('{{ANNOUNCEMENTS_LIST}}', $announcementsHtml, $htmlTemplate);
+$htmlTemplate = str_replace( '{{SEARCH_VALUE}}', htmlspecialchars($search), $htmlTemplate);
+
 echo $htmlTemplate;
 
 ?>
