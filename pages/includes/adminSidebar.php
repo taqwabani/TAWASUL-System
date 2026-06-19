@@ -21,7 +21,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </a>
         
         <a href="user.PHP" class="nav-item <?php echo ($currentPage == 'user.PHP') ? 'active' : ''; ?>">
-            <img src="../images/lucide-CalendarDays.svg" class="nav-icon" alt="Schedule"> 
+            <img src="../images/lucide-Users.svg" class="nav-icon" alt="Schedule"> 
             <span>ادارة المستخدمين</span>
         </a>
         
