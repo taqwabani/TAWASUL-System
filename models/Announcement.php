@@ -96,21 +96,26 @@ class Announcement
     }
     public static function searchAnnouncements($conn, $keyword)
     {
-        $sql = "
-        SELECT *
-        FROM announcements
-        WHERE title LIKE ?
-        OR content LIKE ?
-        ORDER BY createdAt DESC
-    ";
+        try {
+            $sql = "
+                SELECT *
+                FROM announcements
+                WHERE title LIKE ?
+                OR content LIKE ?
+                ORDER BY createdAt DESC
+            ";
 
-        $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare($sql);
 
-        $searchTerm = "%" . $keyword . "%";
+            $searchTerm = "%" . $keyword . "%";
 
-        $stmt->execute([$searchTerm, $searchTerm]);
+            $stmt->execute([$searchTerm, $searchTerm]);
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            error_log("خطأ في البحث عن الإعلانات: " . $e->getMessage());
+            return [];
+        }
     }
 
     public function getArchiveAnnouncements($conn)

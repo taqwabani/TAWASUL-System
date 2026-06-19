@@ -2,6 +2,12 @@
 
 session_start();
 
+// التحقق من وجود المستخدم، وإلا يتم توجيهه لصفحة الدخول
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
 require_once "../config/db_connect.php";
 require_once "../models/Announcement.php";
 
@@ -9,7 +15,20 @@ require_once "../models/Announcement.php";
 $database = Database::getInstance();
 $conn = $database->getConnection();
 
-$parentName = isset($_SESSION['name']) ? $_SESSION['name'] : "زائر";
+// تحديد اسم المستخدم للعرض بناءً على الجلسة، مع قيمة افتراضية
+$userNameForDisplay = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : "زائر";
+$userRole = $_SESSION['role'] ?? 'guest'; // الحصول على دور المستخدم
+$user = '';
+// تضمين الشريط الجانبي الصحيح بناءً على دور المستخدم
+ob_start();
+if ($userRole === 'admin') {
+    include 'includes/adminSidebar.php';
+    $user = "المدير";
+} else { // إذا لم يكن مديراً (مثلاً ولي أمر)، نستخدم الشريط الجانبي العادي
+    include 'includes/sidebar.php';
+        $user = "ولي الأمر";
+}
+$sidebarHtml = ob_get_clean();
 
 $announcementModel =
     new Announcement();
@@ -46,7 +65,7 @@ foreach ($announcements as $ann) {
             <div class='announcement-card-header'>
 
                 <h4 class='announcement-card-title'>
-                    {$ann->title}
+                    " . htmlspecialchars($ann->title) . "
                 </h4>
 
                 <span class='announcement-card-date'>
@@ -56,7 +75,7 @@ foreach ($announcements as $ann) {
             </div>
 
             <div class='announcement-card-body'>
-                {$ann->content}
+                " . nl2br(htmlspecialchars($ann->content)) . "
             </div>
 
         </div>
@@ -67,15 +86,11 @@ foreach ($announcements as $ann) {
     ";
 }
 
-ob_start();
-include 'includes/sidebar.php';
-$sidebarHtml = ob_get_clean();
-
 $htmlTemplate =
     file_get_contents("../HTML/archives.html");
-
-$htmlTemplate = str_replace("{SIDEBAR}", $sidebarHtml, $htmlTemplate);
-$htmlTemplate = str_replace("{{PARENT_NAME}}", htmlspecialchars($parentName), $htmlTemplate);
+$htmlTemplate = str_replace("{SIDEBAR}", $sidebarHtml, $htmlTemplate); // استبدال الشريط الجانبي
+$htmlTemplate = str_replace("{{PARENT_NAME}}", $userNameForDisplay, $htmlTemplate); // استبدال اسم المستخدم المعروض
+$htmlTemplate = str_replace("{{NAME}}", $user, $htmlTemplate); // استبدال اسم المستخدم المعروض
 $htmlTemplate = str_replace("{{ARCHIVE_ANNOUNCEMENTS}}", $archiveHtml, $htmlTemplate);
 
 echo $htmlTemplate;

@@ -116,6 +116,14 @@ class Admin extends User
     public function addUser($name, $userName, $password, $role)
     {
         try {
+            // التحقق من عدم وجود نفس اسم المستخدم أو كلمة المرور مسبقاً
+            $checkSql = "SELECT COUNT(*) FROM users WHERE userName = ? OR password = ?";
+            $checkStmt = $this->db->prepare($checkSql);
+            $checkStmt->execute([$userName, $password]);
+            if ($checkStmt->fetchColumn() > 0) {
+                return false; // إرجاع فشل في حال وجود تكرار
+            }
+
             $sql = "INSERT INTO users (name, userName, password, role) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
             return $stmt->execute([$name, $userName, $password, $role]);
@@ -153,6 +161,14 @@ class Admin extends User
     public function updateUser($id, $name, $userName)
     {
         try {
+            // التحقق من أن اسم المستخدم الجديد غير مستخدم من قبل مستخدم آخر
+            $checkSql = "SELECT COUNT(*) FROM users WHERE userName = ? AND userID != ?";
+            $checkStmt = $this->db->prepare($checkSql);
+            $checkStmt->execute([$userName, (int)$id]);
+            if ($checkStmt->fetchColumn() > 0) {
+                return false; // إرجاع فشل في حال وجود تكرار للاسم مع مستخدم آخر
+            }
+
             $sql = "UPDATE users SET name = ?, userName = ?
              WHERE userID = ?";
             $stmt = $this->db->prepare($sql);

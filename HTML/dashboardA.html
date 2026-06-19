@@ -22,9 +22,19 @@
                       <main class="content-body">
                 <div class="dashboard-header">
                 </div>
+                                <div class="search-container">
+                   <form method="POST" action="" class="search-form">
+
+                     <input type="text" name="search" class="search-input" placeholder="ابحث عن إعلان أو خبر..."value="{{SEARCH_VALUE}}">
+                     <button type="submit" class="search-btn"> بحث </button>
+                    </form>
+                </div>
                 <div class="announcements-section">
                     <div class="section-subtitle">الإعلانات</div>
-                    {{ANNOUNCEMENTS_LIST}}              
+                    {{ANNOUNCEMENTS_LIST}}       
+                                        <div class="view">
+                        <a href="../pages/archives.php" class="btn-view-all">عرض كافة الإعلانات السابقة ←</a>
+                    </div>       
                   </div>
             </main>
         </div>

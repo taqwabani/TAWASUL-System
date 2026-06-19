@@ -27,7 +27,7 @@ if (isset($_GET['delete_id'])) {
     } else {
         $_SESSION['user_msg'] = "فشل حذف المستخدم (لا يمكنك حذف حسابك الخاص)";
     }
-    header("Location: u.PHP");
+    header("Location: user.PHP");
     exit();
 }
 
